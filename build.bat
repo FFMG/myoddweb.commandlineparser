@@ -8,13 +8,13 @@
 
 
 :Pack
-.\tools\nuget\Nuget.exe pack ".\src\myoddweb.commandlineparser\myoddweb.commandlineparser.nuspec" -OutputDirectory ".\src\bin\."
+.\tools\nuget\Nuget.exe pack ".\src\myoddweb.commandlineparser\myoddweb.commandlineparser.nuspec" -OutputDirectory ".\src\output\bin\."
 
 @GOTO End
 
 :Push
 @echo You will need to push it manually or use
-@echo .\tools\nuget\Nuget.exe push .\src\bin\myoddweb.commandlineparser.0.1.0.nupkg <API KEY>
+@echo .\tools\nuget\Nuget.exe push .\src\output\bin\myoddweb.commandlineparser.0.1.0.nupkg <API KEY>
 
 @GOTO End
 

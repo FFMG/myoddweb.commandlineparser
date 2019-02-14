@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>MyOddWeb.CommandlineParser</id>
-    <version>0.1.2</version>
+    <version>0.1.0</version>
     <title>MyOddWeb.CommandlineParser (x86/x64)</title>
     <license type="file">.\LICENSE</license>
     <projectUrl>https://github.com/FFMG/myoddweb.commandlineparser</projectUrl>
@@ -19,6 +19,6 @@
   
   <files>
     <file src="..\..\LICENSE*" target="" />
-    <file src="...\output\bin\452\myoddweb.commandlineparser.dll" target="lib\net452\" />
+    <file src="..\output\bin\452\Release\myoddweb.commandlineparser.dll" target="lib\net452\" />
   </files>
 </package>
