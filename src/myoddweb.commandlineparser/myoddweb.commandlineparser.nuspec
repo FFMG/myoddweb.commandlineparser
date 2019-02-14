@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>MyOddWeb.CommandlineParser</id>
+    <version>0.1.2</version>
+    <title>MyOddWeb.CommandlineParser (x86/x64)</title>
+    <license type="file">.\LICENSE</license>
+    <projectUrl>https://github.com/FFMG/myoddweb.commandlineparser</projectUrl>
+    <description>A fast and reliable .NET command line parser</description>
+    <authors>Florent Guelfucci, myoddweb.com</authors>
+    <tags>CommandlineParser,Commandline Parser,Parser,Command Line,4.5.2,Opensource</tags>
+    <copyright>@copyright 2019 Florent Guelfucci</copyright>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <language>en-UK</language>
+    <dependencies>
+      <group targetFramework="net452"/>
+    </dependencies>
+  </metadata>
+  
+  <files>
+    <file src="..\..\LICENSE*" target="" />
+    <file src="...\output\bin\452\myoddweb.commandlineparser.dll" target="lib\net452\" />
+  </files>
+</package>

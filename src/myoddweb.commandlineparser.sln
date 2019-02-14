@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myoddweb.commandlineparser", "myoddweb.commandlineparser\myoddweb.commandlineparser.csproj", "{F81DBB6B-B8AF-486E-9282-9A7740DFD0C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myoddweb.commandlineparser.tests", "myoddweb.commandlineparser.tests\myoddweb.commandlineparser.tests.csproj", "{79694049-6B7F-41E7-9E4A-6F3C48C82470}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F81DBB6B-B8AF-486E-9282-9A7740DFD0C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F81DBB6B-B8AF-486E-9282-9A7740DFD0C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F81DBB6B-B8AF-486E-9282-9A7740DFD0C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F81DBB6B-B8AF-486E-9282-9A7740DFD0C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79694049-6B7F-41E7-9E4A-6F3C48C82470}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79694049-6B7F-41E7-9E4A-6F3C48C82470}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79694049-6B7F-41E7-9E4A-6F3C48C82470}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79694049-6B7F-41E7-9E4A-6F3C48C82470}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BE07656-03C3-4208-8B39-D9679C1D953C}
+	EndGlobalSection
+EndGlobal
