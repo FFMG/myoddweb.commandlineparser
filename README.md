@@ -37,9 +37,9 @@ Lets say that we have a application that has command line options to `install` a
     ...
     var arguments = new CommandlineParser(args, new Dictionary<string, CommandlineData>
     {
-      { "config", new ArgumentData{ IsRequired = false, DefaultValue = "config.json"}},
-      { "install", new ArgumentData{ IsRequired = false} },
-      { "console", new ArgumentData{ IsRequired = false} }
+      { "config", new CommandlineData{ IsRequired = false, DefaultValue = "config.json"}},
+      { "install", new CommandlineData{ IsRequired = false} },
+      { "console", new CommandlineData{ IsRequired = false} }
     });
     ...
   }
