@@ -2,23 +2,25 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>MyOddWeb.CommandlineParser</id>
-    <version>0.1.0</version>
-    <title>MyOddWeb.CommandlineParser (x86/x64)</title>
+    <version>0.1.1.0</version>
+    <title>MyOddWeb.CommandlineParser (x86/x64/Any)</title>
     <license type="file">.\LICENSE</license>
     <projectUrl>https://github.com/FFMG/myoddweb.commandlineparser</projectUrl>
     <description>A fast and reliable .NET command line parser</description>
     <authors>Florent Guelfucci, myoddweb.com</authors>
-    <tags>CommandlineParser,Commandline Parser,Parser,Command Line,4.5.2,Opensource</tags>
+    <tags>CommandlineParser,Commandline Parser,Parser,Command Line,4.5.2,Core 2.2,Opensource</tags>
     <copyright>@copyright 2019 Florent Guelfucci</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <language>en-UK</language>
     <dependencies>
       <group targetFramework="net452"/>
+      <group targetFramework=".NETCoreApp2.2" />
     </dependencies>
   </metadata>
   
   <files>
     <file src="..\..\LICENSE*" target="" />
     <file src="..\output\bin\452\Release\myoddweb.commandlineparser.dll" target="lib\net452\" />
+    <file src="..\output\bin\Core\Release\netcoreapp2.2\myoddweb.commandlineparser.dll" target="lib\Core2.2\" />
   </files>
 </package>
