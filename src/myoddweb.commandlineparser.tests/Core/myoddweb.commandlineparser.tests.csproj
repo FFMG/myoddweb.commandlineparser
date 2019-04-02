@@ -7,17 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="nunit" Version="3.10.1" />
+    <PackageReference Include="nunit" Version="3.11.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\myoddweb.commandlineparser\Core\myoddweb.commandlineparser.csproj" />
   </ItemGroup>
   
   <ItemGroup>
     <Compile Include="..\CommandlineParserTest.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\myoddweb.commandlineparser\netcoreapp2.2\myoddweb.commandlineparser2.2.csproj" />
   </ItemGroup>
 
 </Project>

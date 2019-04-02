@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myoddweb.commandlineparser45", "myoddweb.commandlineparser\Net45\myoddweb.commandlineparser45.csproj", "{F81DBB6B-B8AF-486E-9282-9A7740DFD0C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "myoddweb.commandlineparser452", "myoddweb.commandlineparser\Net452\myoddweb.commandlineparser452.csproj", "{F81DBB6B-B8AF-486E-9282-9A7740DFD0C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myoddweb.commandlineparser", "myoddweb.commandlineparser\Core\myoddweb.commandlineparser.csproj", "{A80EB8FB-2249-455C-A259-A7AA13D8C724}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myoddweb.commandlineparser2.1", "myoddweb.commandlineparser\netcoreapp2.1\myoddweb.commandlineparser2.1.csproj", "{A80EB8FB-2249-455C-A259-A7AA13D8C724}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myoddweb.commandlineparser2.2", "myoddweb.commandlineparser\netcoreapp2.2\myoddweb.commandlineparser2.2.csproj", "{6EFA7CEC-469D-40CA-82AE-713F35988055}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "myoddweb.commandlineparser.tests", "myoddweb.commandlineparser.tests\Core\myoddweb.commandlineparser.tests.csproj", "{CC013ED0-BF61-4A22-AFAA-04AE08330A6B}"
 EndProject
@@ -23,6 +25,10 @@ Global
 		{A80EB8FB-2249-455C-A259-A7AA13D8C724}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A80EB8FB-2249-455C-A259-A7AA13D8C724}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A80EB8FB-2249-455C-A259-A7AA13D8C724}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EFA7CEC-469D-40CA-82AE-713F35988055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EFA7CEC-469D-40CA-82AE-713F35988055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EFA7CEC-469D-40CA-82AE-713F35988055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EFA7CEC-469D-40CA-82AE-713F35988055}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CC013ED0-BF61-4A22-AFAA-04AE08330A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CC013ED0-BF61-4A22-AFAA-04AE08330A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC013ED0-BF61-4A22-AFAA-04AE08330A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
