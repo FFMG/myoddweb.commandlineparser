@@ -129,7 +129,7 @@ namespace myoddweb.commandlineparser
         }
         values.Add(value);
       }
-      return values.ToArray();
+      return values.ToArray();  
     }
 
     /// <summary>
