@@ -14,7 +14,7 @@
 
 :Push
 @echo You will need to push it manually or use
-@echo .\tools\nuget\Nuget.exe push .\src\output\bin\myoddweb.commandlineparser.0.1.0.nupkg <API KEY>
+@echo .\tools\nuget\Nuget.exe push .\src\output\bin\myoddweb.commandlineparser.0.1.4.nupkg <API KEY>
 
 @GOTO End
 

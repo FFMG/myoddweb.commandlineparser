@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata minClientVersion="2.12">
     <id>MyOddWeb.CommandlineParser</id>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
     <title>MyOddWeb.CommandlineParser (x86/x64/Any)</title>
     <authors>Florent Guelfucci,myoddweb.com</authors>
     <owners>Florent Guelfucci,myoddweb.com</owners>
@@ -14,23 +14,30 @@
     
 Supported platforms:
 - .NET Framework 4.5.2+
-- .NET Standard 1.3
-- .NET Standard 2.0
-- .NET Core    
+- .NET Framework 4.6.2+
+- .NET Standard 2.0+
+- .NET Core 3.0+
     </description>
-    <copyright>@Copyright 2019 Florent Guelfucci</copyright>
+    <copyright>@Copyright 2019-2020 Florent Guelfucci</copyright>
     <language>en-UK</language>
-    <tags>CommandlineParser,Commandline Parser,Parser,Command Line,4.5.2,netstandard 1.3,netstandard 2.0,Opensource</tags>
+    <tags>CommandlineParser,Commandline Parser,Parser,Command Line,4.5.2,4.6.2,Standard 2.0,Core 2.0,Core 3.0,Opensource</tags>
     <dependencies>
-      <group targetFramework=".NETStandard1.3" />
-      <group targetFramework=".NETStandard2.0" />
-      <group targetFramework="net452" />
+      <group targetFramework=".NETFramework4.5.2"/>
+      <group targetFramework=".NETFramework4.6.2"/>
+      <group targetFramework=".NETFramework4.5.2"/>
+      <group targetFramework=".netstandard2.0"/>
+      <group targetFramework=".netcoreapp3.0"/>
     </dependencies>    
   </metadata>
   <files>
-    <file src="..\output\bin\Release\netstandard1.3\myoddweb.commandlineparser.dll" target="lib\.NETStandard1.3\" />
-    <file src="..\output\bin\Release\netstandard2.0\myoddweb.commandlineparser.dll" target="lib\.NETStandard2.0\" />
-    <file src="..\output\bin\Release\net452\myoddweb.commandlineparser.dll" target="lib\net452\" />
+    <file src="..\bin\release\net452\myoddweb.commandlineparser.dll" target="lib\net452\" />
+    
+    <file src="..\bin\release\net462\myoddweb.commandlineparser.dll" target="lib\net462\" />
+    
+    <file src="..\bin\release\netstandard2.0\myoddweb.commandlineparser.dll" target="lib\netstandard2.0\" />
+    
+    <file src="..\bin\release\netcoreapp3.0\myoddweb.commandlineparser.dll" target="lib\netcoreapp3.0\" />
+    
     <file src="..\..\LICENSE*" target="" />
   </files>
 </package>

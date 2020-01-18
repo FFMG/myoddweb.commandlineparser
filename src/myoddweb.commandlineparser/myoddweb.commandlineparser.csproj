@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard1.3;net452</TargetFrameworks>
-    <Version>0.1.3</Version>
-    <RuntimeIdentifiers>win7-x86;win7-x64</RuntimeIdentifiers>
+    <TargetFrameworks>net452;net462;netstandard2.0;netcoreapp3.0</TargetFrameworks>
+    <Version>0.1.4</Version>
     <Authors>Florent Guelfucci</Authors>
     <Language>en-UK</Language>
     <AssemblyName>myoddweb.commandlineparser</AssemblyName>
@@ -14,55 +13,28 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\output\bin\Debug\</OutputPath>
-    <IntermediateOutputPath>..\output\obj\Debug\</IntermediateOutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>$(SolutionDir)bin\Release\</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <NoWarn>$(NoWarn);CS1591;CS1572;CS1573</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\output\bin\Release\</OutputPath>
-    <IntermediateOutputPath>..\output\obj\Release\</IntermediateOutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <IncludeSymbols>false</IncludeSymbols>
-    <DefineConstants>RELEASE</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>$(SolutionDir)bin\Debug\</OutputPath>
   </PropertyGroup>
 
   <!-- references //-->
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net452' ">
-    <Reference Include="mscorlib" />
+ <ItemGroup Condition=" '$(TargetFramework)' == 'net452' Or '$(TargetFramework)' == 'net462'">
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
-  
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <AssemblyTitle>myoddweb.commandlineparser .NET Standard 1.3</AssemblyTitle>
-    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD1_3</DefineConstants>
+ 
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+    <DefineConstants>$(DefineConstants);MYODDWEB_NETSTANDARD</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <AssemblyTitle>myoddweb.commandlineparser .NET Standard 2.0</AssemblyTitle>
-    <DefineConstants>NETCORE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-  </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net452'">
-    <AssemblyTitle>myoddweb.commandlineparser .NET 4.5.2</AssemblyTitle>
-    <DefineConstants>NET452;NETFULL</DefineConstants>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' ">
+    <DefineConstants>$(DefineConstants);MYODDWEB_NETCOREAPP</DefineConstants>
   </PropertyGroup>
   
 </Project>
