@@ -160,8 +160,8 @@ namespace myoddweb.commandlineparser.tests
       var args = new[] { "--a" };
       var parser = new CommandlineParser(args, new CommandlineArgumentRules
                                                   {
-                                                    new CommandlineArgumentRule( "a", true),
-                                                    new CommandlineArgumentRule( "b", false, "World")
+                                                    new RequiredCommandlineArgumentRule( "a"),
+                                                    new OptionalCommandlineArgumentRule( "b", "World")
                                                   });
 
       Assert.IsTrue(parser.IsSet("a"));
@@ -177,8 +177,8 @@ namespace myoddweb.commandlineparser.tests
       var args = new[] { "--a", "--b", "Hello" };
       var parser = new CommandlineParser(args, new CommandlineArgumentRules
                                                   {
-                                                    new CommandlineArgumentRule( "a", true),
-                                                    new CommandlineArgumentRule( "b", false, "World")
+                                                    new RequiredCommandlineArgumentRule( "a"),
+                                                    new OptionalCommandlineArgumentRule( "b", "World")
                                                   });
 
       Assert.IsTrue(parser.IsSet("a"));
@@ -193,8 +193,8 @@ namespace myoddweb.commandlineparser.tests
       // the arguments
       var parser = new CommandlineParser(null, new CommandlineArgumentRules
                                                {
-                                                 new CommandlineArgumentRule( "a", false, "Hello"),
-                                                 new CommandlineArgumentRule( "b", false, "World")
+                                                 new OptionalCommandlineArgumentRule( "a", "Hello"),
+                                                 new OptionalCommandlineArgumentRule( "b", "World")
                                                });
 
       Assert.IsFalse(parser.IsSet("a"));
@@ -210,8 +210,8 @@ namespace myoddweb.commandlineparser.tests
       // the arguments
       var parser = new CommandlineParser(args, new CommandlineArgumentRules
                                                {
-                                                 new CommandlineArgumentRule( "a", false, "Hello"),
-                                                 new CommandlineArgumentRule( "b", false, "World")
+                                                 new OptionalCommandlineArgumentRule( "a", "Hello"),
+                                                 new OptionalCommandlineArgumentRule( "b", "World")
                                                });
 
       Assert.IsFalse(parser.IsSet("a"));
@@ -232,8 +232,8 @@ namespace myoddweb.commandlineparser.tests
         // Missing required argument
         var _ = new CommandlineParser(args, new CommandlineArgumentRules
         {
-          new CommandlineArgumentRule( "a", true),
-          new CommandlineArgumentRule( "b", true)
+          new RequiredCommandlineArgumentRule( "a" ),
+          new RequiredCommandlineArgumentRule( "b" )
         });
       });
 
@@ -248,8 +248,8 @@ namespace myoddweb.commandlineparser.tests
         // Missing required argument.
         var _ = new CommandlineParser(null, new CommandlineArgumentRules
         {
-          new CommandlineArgumentRule( "a", true),
-          new CommandlineArgumentRule( "b", true)
+          new RequiredCommandlineArgumentRule( "a"),
+          new RequiredCommandlineArgumentRule( "b")
         });
       });
     }

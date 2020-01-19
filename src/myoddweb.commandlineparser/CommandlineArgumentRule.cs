@@ -33,7 +33,7 @@ namespace myoddweb.commandlineparser
     /// <inheritdoc />
     public string Key { get;  }
 
-    public CommandlineArgumentRule(string key, bool isRequired = false, string defaultValue = null)
+    protected CommandlineArgumentRule(string key, bool isRequired = false, string defaultValue = null)
     {
       Key = ValidKey(key);
       IsRequired = isRequired;
@@ -46,7 +46,7 @@ namespace myoddweb.commandlineparser
     /// </summary>
     /// <param name="key"></param>
     /// <param name="defaultValue"></param>
-    public CommandlineArgumentRule(string key, string defaultValue ) :
+    protected CommandlineArgumentRule(string key, string defaultValue ) :
       this( key, false, defaultValue )
     {
       if (null == defaultValue)
@@ -60,7 +60,7 @@ namespace myoddweb.commandlineparser
     /// </summary>
     /// <param name="given"></param>
     /// <returns></returns>
-    private static string ValidKey(string given)
+    public static string ValidKey(string given)
     {
       var key = given ?? throw new ArgumentNullException(nameof(given));
       key = key.ToLower().Trim();

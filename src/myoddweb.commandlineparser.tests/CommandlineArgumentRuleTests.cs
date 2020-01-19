@@ -27,11 +27,20 @@ namespace myoddweb.commandlineparser.tests
   internal class CommandlineArgumentRuleTests
   {
     [Test]
-    public void KeyCannotBeNull()
+    public void OptionalKeyCannotBeNull()
     {
       Assert.Throws<ArgumentNullException>(() =>
       {
-        var _ = new CommandlineArgumentRule(null);
+        var _ = new OptionalCommandlineArgumentRule(null);
+      });
+    }
+
+    [Test]
+    public void RequiredKeyCannotBeNull()
+    {
+      Assert.Throws<ArgumentNullException>(() =>
+      {
+        var _ = new RequiredCommandlineArgumentRule(null);
       });
     }
 
@@ -40,10 +49,21 @@ namespace myoddweb.commandlineparser.tests
     [TestCase("test", "test")]
     [TestCase("TEST", "test")]
     [TestCase("teST", "test")]
-    public void KeyIsConvertedToLowerCase(string given, string expected)
+    public void OptionalKeyIsConvertedToLowerCase(string given, string expected)
     {
-      var car = new CommandlineArgumentRule( given );
+      var car = new OptionalCommandlineArgumentRule( given );
       Assert.AreEqual( expected, car.Key );
+    }
+
+    [TestCase("Test", "test")]
+    [TestCase("T", "t")]
+    [TestCase("test", "test")]
+    [TestCase("TEST", "test")]
+    [TestCase("teST", "test")]
+    public void RequiredKeyIsConvertedToLowerCase(string given, string expected)
+    {
+      var car = new RequiredCommandlineArgumentRule(given);
+      Assert.AreEqual(expected, car.Key);
     }
 
     [TestCase("test   ", "test")]
@@ -52,17 +72,37 @@ namespace myoddweb.commandlineparser.tests
     [TestCase("test", "test")]
     public void KeyIsTrimmed(string given, string expected)
     {
-      var car = new CommandlineArgumentRule(given);
+      var car = new OptionalCommandlineArgumentRule(given);
+      Assert.AreEqual(expected, car.Key);
+    }
+
+    [TestCase("test   ", "test")]
+    [TestCase("   test   ", "test")]
+    [TestCase("     test", "test")]
+    [TestCase("test", "test")]
+    public void RequiredKeyIsTrimmed(string given, string expected)
+    {
+      var car = new RequiredCommandlineArgumentRule(given);
       Assert.AreEqual(expected, car.Key);
     }
 
     [TestCase("")]
     [TestCase("   ")]
-    public void KeyCannotBeEmpty(string given)
+    public void OptionalKeyCannotBeEmpty(string given)
     {
       Assert.Throws<ArgumentException>(() =>
       {
-        var _ = new CommandlineArgumentRule(given);
+        var _ = new OptionalCommandlineArgumentRule(given);
+      });
+    }
+
+    [TestCase("")]
+    [TestCase("   ")]
+    public void RequiredKeyCannotBeEmpty(string given)
+    {
+      Assert.Throws<ArgumentException>(() =>
+      {
+        var _ = new RequiredCommandlineArgumentRule(given);
       });
     }
 
@@ -70,18 +110,28 @@ namespace myoddweb.commandlineparser.tests
     public void DefaultVAlues()
     {
       const string key = "key";
-      var car = new CommandlineArgumentRule( key  );
+      var car = new OptionalCommandlineArgumentRule( key  );
       Assert.AreEqual(key, car.Key);
       Assert.IsFalse( car.IsRequired );
       Assert.IsNull( car.DefaultValue );
     }
 
     [Test]
-    public void DefaultValuesWhenDefaultValueIsGiven()
+    public void RequiredDefaultVAlues()
+    {
+      const string key = "key";
+      var car = new RequiredCommandlineArgumentRule(key);
+      Assert.AreEqual(key, car.Key);
+      Assert.IsTrue(car.IsRequired);
+      Assert.IsNull(car.DefaultValue);
+    }
+
+    [Test]
+    public void OptionalDefaultValuesWhenDefaultValueIsGiven()
     {
       const string key = "key";
       const string val = "value";
-      var car = new CommandlineArgumentRule(key, val);
+      var car = new OptionalCommandlineArgumentRule(key, val);
       Assert.AreEqual(key, car.Key);
       Assert.IsFalse(car.IsRequired);
       Assert.AreEqual(val, car.DefaultValue);
