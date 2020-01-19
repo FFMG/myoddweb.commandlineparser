@@ -19,6 +19,8 @@
 //    SOFTWARE.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace myoddweb.commandlineparser
 {
@@ -31,11 +33,11 @@ namespace myoddweb.commandlineparser
     public string DefaultValue { get; }
 
     /// <inheritdoc />
-    public string Key { get;  }
+    public IList<string> Keys { get;  }
 
     protected CommandlineArgumentRule(string key, bool isRequired = false, string defaultValue = null)
     {
-      Key = ValidKey(key);
+      Keys = new List<string> {ValidKey(key)};
       IsRequired = isRequired;
       DefaultValue = defaultValue;
     }
@@ -65,6 +67,15 @@ namespace myoddweb.commandlineparser
       var key = given ?? throw new ArgumentNullException(nameof(given));
       key = key.ToLower().Trim();
       return key.Length > 0 ? key : throw new ArgumentException(given);
+    }
+
+    public bool IsKeyOrAlias(string given)
+    {
+      // clean the key
+      var cleanGiven = ValidKey(given);
+      
+      // do any of the keys matches?
+      return Keys.Any(a => a == cleanGiven);
     }
   }
 }

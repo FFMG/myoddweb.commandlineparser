@@ -52,7 +52,8 @@ namespace myoddweb.commandlineparser.tests
     public void OptionalKeyIsConvertedToLowerCase(string given, string expected)
     {
       var car = new OptionalCommandlineArgumentRule( given );
-      Assert.AreEqual( expected, car.Key );
+      Assert.True( car.Keys.Contains(expected) );
+      Assert.True( car.Keys.Count == 1 );
     }
 
     [TestCase("Test", "test")]
@@ -63,7 +64,8 @@ namespace myoddweb.commandlineparser.tests
     public void RequiredKeyIsConvertedToLowerCase(string given, string expected)
     {
       var car = new RequiredCommandlineArgumentRule(given);
-      Assert.AreEqual(expected, car.Key);
+      Assert.True(car.Keys.Contains(expected));
+      Assert.True(car.Keys.Count == 1);
     }
 
     [TestCase("test   ", "test")]
@@ -73,7 +75,8 @@ namespace myoddweb.commandlineparser.tests
     public void KeyIsTrimmed(string given, string expected)
     {
       var car = new OptionalCommandlineArgumentRule(given);
-      Assert.AreEqual(expected, car.Key);
+      Assert.True(car.Keys.Contains(expected));
+      Assert.True(car.Keys.Count == 1);
     }
 
     [TestCase("test   ", "test")]
@@ -83,7 +86,8 @@ namespace myoddweb.commandlineparser.tests
     public void RequiredKeyIsTrimmed(string given, string expected)
     {
       var car = new RequiredCommandlineArgumentRule(given);
-      Assert.AreEqual(expected, car.Key);
+      Assert.True(car.Keys.Contains(expected));
+      Assert.True(car.Keys.Count == 1);
     }
 
     [TestCase("")]
@@ -111,7 +115,8 @@ namespace myoddweb.commandlineparser.tests
     {
       const string key = "key";
       var car = new OptionalCommandlineArgumentRule( key  );
-      Assert.AreEqual(key, car.Key);
+      Assert.True( car.Keys.Contains(key) );
+      Assert.True( car.Keys.Count == 1 );
       Assert.IsFalse( car.IsRequired );
       Assert.IsNull( car.DefaultValue );
     }
@@ -121,7 +126,8 @@ namespace myoddweb.commandlineparser.tests
     {
       const string key = "key";
       var car = new RequiredCommandlineArgumentRule(key);
-      Assert.AreEqual(key, car.Key);
+      Assert.True(car.Keys.Contains(key));
+      Assert.True(car.Keys.Count == 1);
       Assert.IsTrue(car.IsRequired);
       Assert.IsNull(car.DefaultValue);
     }
@@ -132,7 +138,8 @@ namespace myoddweb.commandlineparser.tests
       const string key = "key";
       const string val = "value";
       var car = new OptionalCommandlineArgumentRule(key, val);
-      Assert.AreEqual(key, car.Key);
+      Assert.True(car.Keys.Contains(key));
+      Assert.True(car.Keys.Count == 1);
       Assert.IsFalse(car.IsRequired);
       Assert.AreEqual(val, car.DefaultValue);
     }

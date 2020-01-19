@@ -140,20 +140,19 @@ namespace myoddweb.commandlineparser
     {
       foreach (var argument in _commandlineRules)
       {
-        // does it exist?
-        if (_parsedArguments.ContainsKey(argument.Key))
-        {
-          continue;
-        }
-
-        // is it required?
+        // is it required? if not, then move on
         if (!argument.IsRequired)
         {
           continue;
         }
 
+        if( argument.Keys.Any(argumentKey => _parsedArguments.ContainsKey(argumentKey)))
+        {
+          continue;
+        }
+
         // yes, it is required and missing, so we have to throw an error.
-        throw new ArgumentException("Missing required argument", argument.Key);
+        throw new ArgumentException("Missing required argument", string.Join( ",", argument.Keys.ToArray()));
       }
     }
 
@@ -260,12 +259,16 @@ namespace myoddweb.commandlineparser
     {
       // adjust the key value
       var adjustedKey = AdjustedKey(key);
+      if (_parsedArguments.ContainsKey(adjustedKey))
+      {
+        return _parsedArguments[adjustedKey];
+      }
 
       // look for that key in our default arguments.
-      var defaultValue = _commandlineRules.FirstOrDefault( r => r.Key == adjustedKey);
+      var defaultValue = _commandlineRules.FirstOrDefault( r => r.Keys.Contains( adjustedKey));
 
       // return it if we have it, the default otherwise.
-      return !_parsedArguments.ContainsKey(adjustedKey) ? defaultValue?.DefaultValue : _parsedArguments[adjustedKey];
+      return defaultValue?.DefaultValue;
     }
 
     /// <summary>
@@ -340,7 +343,8 @@ namespace myoddweb.commandlineparser
     public bool IsHelp()
     {
       // look for any rule that is help and that is set.
-      return _commandlineRules.Where(c => c is IHelpCommandlineArgumentRule).Any(commandlineArgumentRule => IsSet(commandlineArgumentRule.Key));
+      return _commandlineRules.Where(c => c is IHelpCommandlineArgumentRule)
+        .Any(commandlineArgumentRule => commandlineArgumentRule.Keys.Any(IsSet));
     }
   }
 }

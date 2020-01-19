@@ -42,7 +42,7 @@ namespace myoddweb.commandlineparser
 
     private void ThrowIfDuplicates()
     {
-      if (_rules.GroupBy(x => x.Key).Any(g => g.Count() > 1))
+      if (_rules.SelectMany( x => x.Keys ).GroupBy(y => y).Any(g => g.Count() > 1))
       {
         throw new ArgumentException( "You cannot have duplicate keys." );
       }

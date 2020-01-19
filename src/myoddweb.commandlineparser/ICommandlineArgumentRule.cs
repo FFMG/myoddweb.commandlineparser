@@ -17,14 +17,17 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
+
+using System.Collections.Generic;
+
 namespace myoddweb.commandlineparser
 {
   public interface ICommandlineArgumentRule
   {
     /// <summary>
-    /// The key value of the argument
+    /// The keys we are looking for.
     /// </summary>
-    string Key { get; }
+    IList<string> Keys { get; }
 
     /// <summary>
     /// Check if the value is required or not.
@@ -35,5 +38,12 @@ namespace myoddweb.commandlineparser
     /// The default value, (null by default).
     /// </summary>
     string DefaultValue { get; }
+
+    /// <summary>
+    /// Check if the given value matches the key and/or aliases
+    /// </summary>
+    /// <param name="given"></param>
+    /// <returns></returns>
+    bool IsKeyOrAlias(string given);
   }
 }
