@@ -9,10 +9,13 @@ Notable changes
 - Change log file :)
 - Support for `.NET Core 3`
 - Support for `.NET Framework 4.6.2`
+- CommandLine Rule
+  - `RequiredCommandlineArgumentRule` for required items
+  - `OptionalCommandlineArgumentRule` for optional items
 
 ### Changed
 
-- Replaced `CommandlineData` with `CommandlineArgumentRule`
+- Replaced `CommandlineData` with `CommandlineArgumentRule`, (required or optional)
 
 ```csharp
   ...
@@ -31,9 +34,10 @@ Changed to
   ...
   var arguments = new CommandlineParser(args, new CommandlineArgumentRules
     {
-      new CommandlineArgumentRule( "config",  false, "config.json" ) },
-      new CommandlineArgumentRule( "install", false ) },
-      new CommandlineArgumentRule( "console", false ) }
+      new OptionalCommandlineArgumentRule( "config", "config.json" ) },
+      new OptionalCommandlineArgumentRule( "install" ) },
+      new OptionalCommandlineArgumentRule( "console" ) },
+      new RequiredCommandlineArgumentRule( "name" )
     });
   ...
 ```
