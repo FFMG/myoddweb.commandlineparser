@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -13,11 +13,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Compile Include="..\CommandlineParserTest.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\..\myoddweb.commandlineparser\myoddweb.commandlineparser.csproj" />
+    <ProjectReference Include="..\myoddweb.commandlineparser\myoddweb.commandlineparser.csproj" />
   </ItemGroup>
 
 </Project>

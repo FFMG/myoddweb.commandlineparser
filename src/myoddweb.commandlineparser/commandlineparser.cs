@@ -140,11 +140,8 @@ namespace myoddweb.commandlineparser
     {
       foreach (var argument in _commandlineRules)
       {
-        // adjust the key value.
-        var adjustedKey = AdjustedKey(argument.Key);
-
         // does it exist?
-        if (_parsedArguments.ContainsKey(adjustedKey))
+        if (_parsedArguments.ContainsKey(argument.Key))
         {
           continue;
         }
@@ -156,7 +153,7 @@ namespace myoddweb.commandlineparser
         }
 
         // yes, it is required and missing, so we have to throw an error.
-        throw new ArgumentException("Missing required argument", adjustedKey);
+        throw new ArgumentException("Missing required argument", argument.Key);
       }
     }
 

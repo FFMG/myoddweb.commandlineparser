@@ -17,30 +17,54 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
+
+using System;
+
 namespace myoddweb.commandlineparser
 {
   public class CommandlineArgumentRule : ICommandlineArgumentRule
   {
-    /// <summary>
-    /// Check if the value is required or not.
-    /// </summary>
+    /// <inheritdoc />
     public bool IsRequired { get; }
 
-    /// <summary>
-    /// The default value, (null by default).
-    /// </summary>
+    /// <inheritdoc />
     public string DefaultValue { get; }
 
-    /// <summary>
-    /// The key vale of the command line argument.
-    /// </summary>
+    /// <inheritdoc />
     public string Key { get;  }
 
     public CommandlineArgumentRule(string key, bool isRequired = false, string defaultValue = null)
     {
-      Key = key;
+      Key = ValidKey(key);
       IsRequired = isRequired;
       DefaultValue = defaultValue;
+    }
+
+    /// <summary>
+    /// Make sure that the given key is trimmed, lower case, not null and not empty.
+    /// </summary>
+    /// <param name="given"></param>
+    /// <returns></returns>
+    private static string ValidKey(string given)
+    {
+      var key = given ?? throw new ArgumentNullException(nameof(given));
+      key = key.ToLower().Trim();
+      return key.Length > 0 ? key : throw new ArgumentException(given);
+    }
+
+    /// <summary>
+    /// Constructor when we have a default value.
+    /// As we have a default value, the argument is not required.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="defaultValue"></param>
+    public CommandlineArgumentRule(string key, string defaultValue ) :
+      this( key, false, defaultValue )
+    {
+      if (null == defaultValue)
+      {
+        throw new ArgumentNullException( nameof(defaultValue), "You cannot pass a null argument as a default value.");
+      }
     }
   }
 }
