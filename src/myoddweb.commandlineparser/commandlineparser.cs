@@ -40,21 +40,21 @@ namespace myoddweb.commandlineparser
     /// Rules that our arguments have to follow, for example required.
     /// Or, if not required, the default value.
     /// </summary>
-    private readonly IDictionary<string, CommandlineData> _commandlineData;
+    private readonly CommandlineArgumentRules _commandlineRules;
 
     /// <summary>
     /// The constructor
     /// </summary>
     /// <param name="args">the given arguments.</param>
-    /// <param name="commandlineData">argument data telling us about required data.</param>
+    /// <param name="commandlineRules">argument data telling us about required data.</param>
     /// <param name="leadingPattern">the leading pattern to delimit arguments.</param>
-    public CommandlineParser(IReadOnlyList<string> args, IDictionary<string, CommandlineData> commandlineData = null, string leadingPattern = "--")
+    public CommandlineParser(IReadOnlyList<string> args, CommandlineArgumentRules commandlineRules = null, string leadingPattern = "--")
     {
       // the leading pattern
       _leadingPattern = leadingPattern;
 
       // set the arguments data.
-      _commandlineData = commandlineData ?? new Dictionary<string, CommandlineData>();
+      _commandlineRules = commandlineRules ?? new CommandlineArgumentRules();
 
       // the arguments
       _parsedArguments = new Dictionary<string, string>();
@@ -68,7 +68,7 @@ namespace myoddweb.commandlineparser
 
     public CommandlineParser Clone()
     {
-      return new CommandlineParser(Arguments(false), _commandlineData, _leadingPattern);
+      return new CommandlineParser(Arguments(false), _commandlineRules, _leadingPattern);
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ namespace myoddweb.commandlineparser
     /// </summary>
     private void ValidateArgumentsData()
     {
-      foreach (var argument in _commandlineData)
+      foreach (var argument in _commandlineRules)
       {
         // adjust the key value.
         var adjustedKey = AdjustedKey(argument.Key);
@@ -150,7 +150,7 @@ namespace myoddweb.commandlineparser
         }
 
         // is it required?
-        if (!argument.Value.IsRequired)
+        if (!argument.IsRequired)
         {
           continue;
         }
@@ -265,10 +265,10 @@ namespace myoddweb.commandlineparser
       var adjustedKey = AdjustedKey(key);
 
       // look for that key in our default arguments.
-      var defaultValue = _commandlineData.ContainsKey(adjustedKey) ? _commandlineData[adjustedKey].DefaultValue : null;
+      var defaultValue = _commandlineRules.FirstOrDefault( r => r.Key == adjustedKey);
 
       // return it if we have it, the default otherwise.
-      return !_parsedArguments.ContainsKey(adjustedKey) ? defaultValue : _parsedArguments[adjustedKey];
+      return !_parsedArguments.ContainsKey(adjustedKey) ? defaultValue?.DefaultValue : _parsedArguments[adjustedKey];
     }
 
     /// <summary>

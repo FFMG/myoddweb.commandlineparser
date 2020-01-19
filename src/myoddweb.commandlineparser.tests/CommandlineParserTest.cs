@@ -19,9 +19,7 @@
 //    SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using NUnit.Framework;
-using myoddweb.commandlineparser;
 
 namespace myoddweb.commandlineparser.tests
 {
@@ -161,10 +159,10 @@ namespace myoddweb.commandlineparser.tests
     {
       // the arguments
       var args = new[] { "--a" };
-      var parser = new CommandlineParser(args, new Dictionary<string, CommandlineData>
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
                                                   {
-                                                    { "a", new CommandlineData{ IsRequired = true} },
-                                                    { "b", new CommandlineData{ IsRequired = false, DefaultValue = "World"}}
+                                                    new CommandlineArgumentRule( "a", true),
+                                                    new CommandlineArgumentRule( "b", false, "World")
                                                   });
 
       Assert.IsTrue(parser.IsSet("a"));
@@ -178,10 +176,10 @@ namespace myoddweb.commandlineparser.tests
     {
       // the arguments
       var args = new[] { "--a", "--b", "Hello" };
-      var parser = new CommandlineParser(args, new Dictionary<string, CommandlineData>
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
                                                   {
-                                                    { "a", new CommandlineData{ IsRequired = true} },
-                                                    { "b", new CommandlineData{ IsRequired = false, DefaultValue = "World"}}
+                                                    new CommandlineArgumentRule( "a", true),
+                                                    new CommandlineArgumentRule( "b", false, "World")
                                                   });
 
       Assert.IsTrue(parser.IsSet("a"));
@@ -194,11 +192,11 @@ namespace myoddweb.commandlineparser.tests
     public void TestNullArgumentsButhHasRules()
     {
       // the arguments
-      var parser = new CommandlineParser(null, new Dictionary<string, CommandlineData>
-                                                  {
-                                                    { "a", new CommandlineData{ IsRequired = false, DefaultValue = "Hello"}},
-                                                    { "b", new CommandlineData{ IsRequired = false, DefaultValue = "World"}}
-                                                  });
+      var parser = new CommandlineParser(null, new CommandlineArgumentRules
+                                               {
+                                                 new CommandlineArgumentRule( "a", false, "Hello"),
+                                                 new CommandlineArgumentRule( "b", false, "World")
+                                               });
 
       Assert.IsFalse(parser.IsSet("a"));
       Assert.IsFalse(parser.IsSet("b"));
@@ -211,11 +209,11 @@ namespace myoddweb.commandlineparser.tests
     {
       var args = new string[] { };
       // the arguments
-      var parser = new CommandlineParser(args, new Dictionary<string, CommandlineData>
-                                                  {
-                                                    { "a", new CommandlineData{ IsRequired = false, DefaultValue = "Hello"}},
-                                                    { "b", new CommandlineData{ IsRequired = false, DefaultValue = "World"}}
-                                                  });
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+                                               {
+                                                 new CommandlineArgumentRule( "a", false, "Hello"),
+                                                 new CommandlineArgumentRule( "b", false, "World")
+                                               });
 
       Assert.IsFalse(parser.IsSet("a"));
       Assert.IsFalse(parser.IsSet("b"));
@@ -233,10 +231,10 @@ namespace myoddweb.commandlineparser.tests
       Assert.Throws<ArgumentException>(() =>
       {
         // Missing required argument
-        new CommandlineParser(args, new Dictionary<string, CommandlineData>
+        var _ = new CommandlineParser(args, new CommandlineArgumentRules
         {
-          {"a", new CommandlineData {IsRequired = true}},
-          {"b", new CommandlineData {IsRequired = true}}
+          new CommandlineArgumentRule( "a", true),
+          new CommandlineArgumentRule( "b", true)
         });
       });
 
@@ -249,10 +247,10 @@ namespace myoddweb.commandlineparser.tests
       Assert.Throws<ArgumentException>(() =>
       {
         // Missing required argument.
-        new CommandlineParser(null, new Dictionary<string, CommandlineData>
+        var _ = new CommandlineParser(null, new CommandlineArgumentRules
         {
-          {"a", new CommandlineData {IsRequired = true}},
-          {"b", new CommandlineData {IsRequired = true}}
+          new CommandlineArgumentRule( "a", true),
+          new CommandlineArgumentRule( "b", true)
         });
       });
     }
@@ -375,7 +373,7 @@ namespace myoddweb.commandlineparser.tests
       var args = new[] { "--a", "12" };
       var parser = new CommandlineParser(args);
 
-      Assert.AreEqual(12, parser.Get<int>("a", 0)); //  fake default
+      Assert.AreEqual(12, parser.Get("a", 0)); //  fake default
     }
 
     [Test]
@@ -395,7 +393,7 @@ namespace myoddweb.commandlineparser.tests
       var args = new[] { "--a", "b" };
       var parser = new CommandlineParser(args);
 
-      Assert.AreEqual(default(int), parser.Get<int>("a", 12)); //  there is a value, so we will return the default.
+      Assert.AreEqual(default(int), parser.Get("a", 12)); //  there is a value, so we will return the default.
     }
 
     [Test]
@@ -425,7 +423,7 @@ namespace myoddweb.commandlineparser.tests
       var args = new[] { "--a", "b" };
       var parser = new CommandlineParser(args);
 
-      Assert.AreEqual(12, parser.Get<int>("c", 12)); // return the default value.
+      Assert.AreEqual(12, parser.Get("c", 12)); // return the default value.
     }
 
     [Test]
@@ -445,7 +443,7 @@ namespace myoddweb.commandlineparser.tests
       var args = new[] { "--a", "b" };
       var parser = new CommandlineParser(args);
 
-      Assert.AreEqual(12.34, parser.Get<double>("c", 12.34)); // return the default value.
+      Assert.AreEqual(12.34, parser.Get("c", 12.34)); // return the default value.
     }
 
     [Test]
@@ -468,7 +466,7 @@ namespace myoddweb.commandlineparser.tests
 
       Assert.Throws<ArgumentNullException>(() =>
       {
-        parser.Get<double>(null, 12.34);
+        parser.Get(null, 12.34);
       });
     }
   }
