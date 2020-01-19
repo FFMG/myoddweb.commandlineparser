@@ -31,7 +31,7 @@ namespace myoddweb.commandlineparser.tests
     {
       Assert.Throws<ArgumentNullException>(() =>
       {
-        var _ = new OptionalCommandlineArgumentRule(null);
+        var _ = new OptionalCommandlineArgumentRule( (string)null);
       });
     }
 
@@ -40,7 +40,7 @@ namespace myoddweb.commandlineparser.tests
     {
       Assert.Throws<ArgumentNullException>(() =>
       {
-        var _ = new RequiredCommandlineArgumentRule(null);
+        var _ = new RequiredCommandlineArgumentRule( (string)null);
       });
     }
 
@@ -142,6 +142,54 @@ namespace myoddweb.commandlineparser.tests
       Assert.True(car.Keys.Count == 1);
       Assert.IsFalse(car.IsRequired);
       Assert.AreEqual(val, car.DefaultValue);
+    }
+
+    [Test]
+    public void OptionalAddMultipleKeysAllSet()
+    {
+      var car = new OptionalCommandlineArgumentRule( new []{ "key1", "key2"});
+      Assert.True(car.Keys.Contains("key1"));
+      Assert.True(car.Keys.Contains("key2"));
+      Assert.True(car.Keys.Count == 2);
+      Assert.IsFalse(car.IsRequired);
+    }
+
+    [Test]
+    public void RequiredAddMultipleKeysAllSet()
+    {
+      var car = new RequiredCommandlineArgumentRule(new[] { "key1", "key2" });
+      Assert.True(car.Keys.Contains("key1"));
+      Assert.True(car.Keys.Contains("key2"));
+      Assert.True(car.Keys.Count == 2);
+      Assert.IsTrue(car.IsRequired);
+    }
+
+    [Test]
+    public void HelpAddMultipleKeysAllSet()
+    {
+      var car = new HelpCommandlineArgumentRule(new[] { "key1", "key2" });
+      Assert.True(car.Keys.Contains("key1"));
+      Assert.True(car.Keys.Contains("key2"));
+      Assert.True(car.Keys.Count == 2);
+      Assert.IsFalse(car.IsRequired);
+    }
+
+    [Test]
+    public void OptionalCannotHaveDuplicatesKeys()
+    {
+      Assert.Throws<ArgumentException>(() =>
+      {
+        var _ = new OptionalCommandlineArgumentRule(new []{"a", "a"});
+      });
+    }
+
+    [Test]
+    public void RequiredCannotHaveDuplicatesKeys()
+    {
+      Assert.Throws<ArgumentException>(() =>
+      {
+        var _ = new RequiredCommandlineArgumentRule(new[] { "a", "a" });
+      });
     }
   }
 }

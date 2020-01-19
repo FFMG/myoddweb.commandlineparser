@@ -1,9 +1,16 @@
-﻿namespace myoddweb.commandlineparser
+﻿using System.Collections.Generic;
+
+namespace myoddweb.commandlineparser
 {
   public class HelpCommandlineArgumentRule : CommandlineArgumentRule, IHelpCommandlineArgumentRule
   {
     public HelpCommandlineArgumentRule(string key) :
-      base(key, false, null)
+      this( new []{key} )
+    {
+    }
+
+    public HelpCommandlineArgumentRule(IEnumerable<string> keys) :
+      base(keys, false, null)
     {
     }
   }

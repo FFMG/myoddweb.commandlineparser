@@ -17,7 +17,6 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,6 +39,9 @@ namespace myoddweb.commandlineparser
       ThrowIfDuplicates();
     }
 
+    /// <summary>
+    /// Do not allow duplicate keys and aliases.
+    /// </summary>
     private void ThrowIfDuplicates()
     {
       if (_rules.SelectMany( x => x.Keys ).GroupBy(y => y).Any(g => g.Count() > 1))

@@ -17,7 +17,6 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,40 +34,41 @@ namespace myoddweb.commandlineparser
     /// <inheritdoc />
     public IList<string> Keys { get;  }
 
-    protected CommandlineArgumentRule(string key, bool isRequired = false, string defaultValue = null)
+    /// <summary>
+    /// Create an argument with all the values.
+    /// </summary>
+    /// <param name="keys"></param>
+    /// <param name="isRequired"></param>
+    /// <param name="defaultValue"></param>
+    protected CommandlineArgumentRule(IEnumerable<string> keys, bool isRequired = false, string defaultValue = null)
     {
-      Keys = new List<string> {ValidKey(key)};
+      Keys = new List<string>();
+      foreach (var key in keys)
+      {
+        var validKey = ValidKey(key);
+        if (Keys.Contains(key))
+        {
+          throw new ArgumentException("You cannot have duplicate keys.");
+        }
+        Keys.Add( validKey );
+      }
       IsRequired = isRequired;
       DefaultValue = defaultValue;
     }
-
-    /// <summary>
-    /// Constructor when we have a default value.
-    /// As we have a default value, the argument is not required.
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="defaultValue"></param>
-    protected CommandlineArgumentRule(string key, string defaultValue ) :
-      this( key, false, defaultValue )
-    {
-      if (null == defaultValue)
-      {
-        throw new ArgumentNullException( nameof(defaultValue), "You cannot pass a null argument as a default value.");
-      }
-    }
-
+    
     /// <summary>
     /// Make sure that the given key is trimmed, lower case, not null and not empty.
     /// </summary>
     /// <param name="given"></param>
     /// <returns></returns>
-    public static string ValidKey(string given)
+    private static string ValidKey(string given)
     {
       var key = given ?? throw new ArgumentNullException(nameof(given));
       key = key.ToLower().Trim();
       return key.Length > 0 ? key : throw new ArgumentException(given);
     }
 
+    /// <inheritdoc />
     public bool IsKeyOrAlias(string given)
     {
       // clean the key

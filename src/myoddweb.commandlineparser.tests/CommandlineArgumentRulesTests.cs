@@ -39,13 +39,25 @@ namespace myoddweb.commandlineparser.tests
     }
 
     [Test]
-    public void YouCannotAddDuplicates()
+    public void YouCannotAddDuplicatesOptional()
     {
       var parser = new CommandlineArgumentRules
       {
         new OptionalCommandlineArgumentRule("a")
       };
       Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule("a")); });
+    }
+
+    [Test]
+    public void YouCannotAddMultipleDuplicatesOptional()
+    {
+      var parser = new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( new [] {"a","b", "c"} )
+      };
+
+      // alias 'a' is duplicated.
+      Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule( new []{"x", "y", "a"})); });
     }
   }
 }
