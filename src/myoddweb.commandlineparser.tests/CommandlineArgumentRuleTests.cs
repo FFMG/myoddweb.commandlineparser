@@ -75,5 +75,16 @@ namespace myoddweb.commandlineparser.tests
       Assert.IsFalse( car.IsRequired );
       Assert.IsNull( car.DefaultValue );
     }
+
+    [Test]
+    public void DefaultValuesWhenDefaultValueIsGiven()
+    {
+      const string key = "key";
+      const string val = "value";
+      var car = new CommandlineArgumentRule(key, val);
+      Assert.AreEqual(key, car.Key);
+      Assert.IsFalse(car.IsRequired);
+      Assert.AreEqual(val, car.DefaultValue);
+    }
   }
 }

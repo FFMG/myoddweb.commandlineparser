@@ -41,18 +41,6 @@ namespace myoddweb.commandlineparser
     }
 
     /// <summary>
-    /// Make sure that the given key is trimmed, lower case, not null and not empty.
-    /// </summary>
-    /// <param name="given"></param>
-    /// <returns></returns>
-    private static string ValidKey(string given)
-    {
-      var key = given ?? throw new ArgumentNullException(nameof(given));
-      key = key.ToLower().Trim();
-      return key.Length > 0 ? key : throw new ArgumentException(given);
-    }
-
-    /// <summary>
     /// Constructor when we have a default value.
     /// As we have a default value, the argument is not required.
     /// </summary>
@@ -65,6 +53,18 @@ namespace myoddweb.commandlineparser
       {
         throw new ArgumentNullException( nameof(defaultValue), "You cannot pass a null argument as a default value.");
       }
+    }
+
+    /// <summary>
+    /// Make sure that the given key is trimmed, lower case, not null and not empty.
+    /// </summary>
+    /// <param name="given"></param>
+    /// <returns></returns>
+    private static string ValidKey(string given)
+    {
+      var key = given ?? throw new ArgumentNullException(nameof(given));
+      key = key.ToLower().Trim();
+      return key.Length > 0 ? key : throw new ArgumentException(given);
     }
   }
 }
