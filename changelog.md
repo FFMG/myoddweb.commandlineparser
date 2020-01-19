@@ -12,6 +12,32 @@ Notable changes
 
 ### Changed
 
+- Replaced `CommandlineData` with `CommandlineArgumentRule`
+
+```csharp
+  ...
+  var arguments = new CommandlineParser(args, new Dictionary<string, CommandlineData>
+    {
+      { "config", new CommandlineData{ IsRequired = false, DefaultValue = "config.json"}},
+      { "install", new CommandlineData{ IsRequired = false} },
+      { "console", new CommandlineData{ IsRequired = false} }
+    });
+  ...
+```
+
+Changed to
+
+```csharp
+  ...
+  var arguments = new CommandlineParser(args, new CommandlineArgumentRules
+    {
+      new CommandlineArgumentRule( "config",  false, "config.json" ) },
+      new CommandlineArgumentRule( "install", false ) },
+      new CommandlineArgumentRule( "console", false ) }
+    });
+  ...
+```
+
 ### Fixed
 
 ### Removed

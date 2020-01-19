@@ -6,7 +6,7 @@ A very simple c# command line arguments Parser
 - Very simple command line parser for c#
 - Simple to import/install
 - Simple to use
-- You can create optional parametters
+- You can create optional parameters
 - You can create help output.
 
 ## Installing
@@ -16,14 +16,18 @@ A very simple c# command line arguments Parser
 [![NuGet Count](https://img.shields.io/nuget/dt/MyOddWeb.CommandlineParser.svg)](https://www.nuget.org/packages/MyOddWeb.CommandlineParser/)
 
 #### Package manager
+
 `Install-Package MyOddWeb.CommandlineParser`
 
 #### CLI
+
 ##### .NET
+
 `dotnet add package MyOddWeb.CommandlineParser`
 
 #### Packet
-`paket add MyOddWeb.CommandlineParser`
+
+`packet add MyOddWeb.CommandlineParser`
 
 ## Example
 
@@ -35,12 +39,12 @@ Lets say that we have a application that has command line options to `install` a
   private void Bar()
   {
     ...
-    var arguments = new CommandlineParser(args, new Dictionary<string, CommandlineData>
-    {
-      { "config", new CommandlineData{ IsRequired = false, DefaultValue = "config.json"}},
-      { "install", new CommandlineData{ IsRequired = false} },
-      { "console", new CommandlineData{ IsRequired = false} }
-    });
+    var arguments = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new CommandlineArgumentRule( "config",  false, "config.json" ) },
+        new CommandlineArgumentRule( "install", false ) },
+        new CommandlineArgumentRule( "console", false ) }
+      });
     ...
   }
 ```
@@ -48,19 +52,21 @@ Lets say that we have a application that has command line options to `install` a
 We can then check if we are running as a console
 
 ```csharp
-      if (arguments.IsSet("console"))
-      {
-        InvokeActionInstall();
-        return;
-      }
+  ...
+  if (arguments.IsSet("console"))
+  {
+    InvokeActionInstall();
+    return;
+  }
+  ...
 ```
 
 We can also call the config value as we know it exists... (we have a default value)
 
 ```csharp
-    ...
-    var config = _arguments["config"];
-    ...
+  ...
+  var config = _arguments["config"];
+  ...
 ```
 
 We can also get a default value directly
@@ -70,19 +76,19 @@ For example, in the example below, we will either get the number that was passed
 The value itself will be an integer, as this is what we expect... 
 
 ```csharp
-    ...
-    var theGalaxy = parser.Get<int>("a", 42)
-    ...
+  ...
+  var theGalaxy = parser.Get<int>("a", 42)
+  ...
 ```
 
 The argument does not have to have a value, for example you could have `example.exe --a --b`
 
-In that case you would simply defaule
+In that case you would simply default
 
 ```csharp
-    ...
-    var arguments = new CommandlineParser(args, null );
-    ...
+  ...
+  var arguments = new CommandlineParser(args, null );
+  ...
 ```
 
 What if you want a different leading pattern ...? Something like `example.exe -a -b`
@@ -90,7 +96,7 @@ What if you want a different leading pattern ...? Something like `example.exe -a
 Simply pass it as a third argument ...
 
 ```csharp
-    ...
-    var arguments = new CommandlineParser(args, null, "-" );
-    ...
+  ...
+  var arguments = new CommandlineParser(args, null, "-" );
+  ...
 ```
