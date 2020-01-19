@@ -17,14 +17,36 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
+
+using System.Collections;
 using System.Collections.Generic;
 
 namespace myoddweb.commandlineparser
 {
-  /// <summary>
-  /// List of rules
-  /// </summary>
-  public class CommandlineArgumentRules : List<ICommandlineArgumentRule>
+  /// <inheritdoc cref="ICommandlineArgumentRules" />
+  public class CommandlineArgumentRules : ICommandlineArgumentRules
   {
+    /// <summary>
+    /// The list of rules.
+    /// </summary>
+    private readonly List<ICommandlineArgumentRule> _rules = new List<ICommandlineArgumentRule>();
+
+    /// <inheritdoc cref="ICommandlineArgumentRules" />
+    public void Add(ICommandlineArgumentRule rule)
+    {
+      _rules.Add( rule );
+    }
+
+    /// <inheritdoc />
+    public IEnumerator<ICommandlineArgumentRule> GetEnumerator()
+    {
+      return _rules.GetEnumerator();
+    }
+
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return this.GetEnumerator();
+    }
   }
 }

@@ -40,7 +40,7 @@ namespace myoddweb.commandlineparser
     /// Rules that our arguments have to follow, for example required.
     /// Or, if not required, the default value.
     /// </summary>
-    private readonly CommandlineArgumentRules _commandlineRules;
+    private readonly ICommandlineArgumentRules _commandlineRules;
 
     /// <summary>
     /// The constructor
@@ -48,7 +48,7 @@ namespace myoddweb.commandlineparser
     /// <param name="args">the given arguments.</param>
     /// <param name="commandlineRules">argument data telling us about required data.</param>
     /// <param name="leadingPattern">the leading pattern to delimit arguments.</param>
-    public CommandlineParser(IReadOnlyList<string> args, CommandlineArgumentRules commandlineRules = null, string leadingPattern = "--")
+    public CommandlineParser(IReadOnlyList<string> args, ICommandlineArgumentRules commandlineRules = null, string leadingPattern = "--")
     {
       // the leading pattern
       _leadingPattern = leadingPattern;
