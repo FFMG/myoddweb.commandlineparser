@@ -18,8 +18,10 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace myoddweb.commandlineparser
 {
@@ -35,6 +37,15 @@ namespace myoddweb.commandlineparser
     public void Add(ICommandlineArgumentRule rule)
     {
       _rules.Add( rule );
+      ThrowIfDuplicates();
+    }
+
+    private void ThrowIfDuplicates()
+    {
+      if (_rules.GroupBy(x => x.Key).Any(g => g.Count() > 1))
+      {
+        throw new ArgumentException( "You cannot have duplicate keys." );
+      }
     }
 
     /// <inheritdoc />
