@@ -41,9 +41,10 @@ Lets say that we have a application that has command line options to `install` a
     ...
     var arguments = new CommandlineParser(args, new CommandlineArgumentRules
       {
-        new OptionalCommandlineArgumentRule( "config",  false, "config.json" ) },
-        new OptionalCommandlineArgumentRule( "install", false ) },
-        new OptionalCommandlineArgumentRule( "console", false ) },
+        new HelpCommandlineArgumentRule( "help" ),
+        new OptionalCommandlineArgumentRule( "config",  "config.json" ) },
+        new OptionalCommandlineArgumentRule( "install" ) },
+        new OptionalCommandlineArgumentRule( "console" ) },
         new RequiredCommandlineArgumentRule( "name" )
       });
     ...

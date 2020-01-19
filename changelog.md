@@ -10,8 +10,9 @@ Notable changes
 - Support for `.NET Core 3`
 - Support for `.NET Framework 4.6.2`
 - CommandLine Rule
-  - `RequiredCommandlineArgumentRule` for required items
-  - `OptionalCommandlineArgumentRule` for optional items
+  - `RequiredCommandlineArgumentRule` for required rules.
+  - `OptionalCommandlineArgumentRule` for optional rules.
+  - `HelpCommandlineArgumentRule` for help rules.
 
 ### Changed
 
