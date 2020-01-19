@@ -468,5 +468,43 @@ namespace myoddweb.commandlineparser.tests
         parser.Get(null, 12.34);
       });
     }
+
+    [Test]
+    public void HelpRuleIsNotSet()
+    {
+      var args = new[] { "--a", "b" };
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( "a" )
+      });
+
+      Assert.IsFalse( parser.IsHelp() );
+    }
+
+    [Test]
+    public void HelpRuleIsSetButNotRequested()
+    {
+      var args = new[] { "--a", "b" };
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( "a" ),
+        new HelpCommandlineArgumentRule( "help")
+      });
+
+      Assert.IsFalse(parser.IsHelp());
+    }
+
+    [Test]
+    public void HelpRuleIsSetAndIsRequested()
+    {
+      var args = new[] { "--a", "b", "--help" };
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( "a" ),
+        new HelpCommandlineArgumentRule( "help")
+      });
+
+      Assert.IsTrue(parser.IsHelp());
+    }
   }
 }

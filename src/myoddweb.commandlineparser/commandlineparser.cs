@@ -332,5 +332,15 @@ namespace myoddweb.commandlineparser
         }
       }
     }
+
+    /// <summary>
+    /// Check if the help was requested or not.
+    /// </summary>
+    /// <returns></returns>
+    public bool IsHelp()
+    {
+      // look for any rule that is help and that is set.
+      return _commandlineRules.Where(c => c is IHelpCommandlineArgumentRule).Any(commandlineArgumentRule => IsSet(commandlineArgumentRule.Key));
+    }
   }
 }
