@@ -222,6 +222,24 @@ namespace myoddweb.commandlineparser.tests
     }
 
     [Test]
+    public void TestRequiredValueWithAlias()
+    {
+      // the arguments
+      var args = new[] { "--a" };
+
+      // 'b' is missing.
+      Assert.DoesNotThrow( () =>
+      {
+        // the second argument is present
+        var _ = new CommandlineParser(args, new CommandlineArgumentRules
+        {
+          new RequiredCommandlineArgumentRule( new []{"alias", "a"} )
+        });
+      });
+
+    }
+
+    [Test]
     public void TestMissingRequiredArgument()
     {
       // the arguments

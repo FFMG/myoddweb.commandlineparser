@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using myoddweb.commandlineparser.Interfaces;
 
@@ -10,6 +11,21 @@ namespace myoddweb.commandlineparser.OutputFormatter
     /// <inheritdoc />
     public void Write(IReadOnlyCommandlineArgumentRules rules)
     {
+      // the app name.
+      var fileName = Path.GetFileNameWithoutExtension(GetType().Assembly.Location);
+      var usage = $"Usage: {fileName}";
+      Console.WriteLine( usage );
+      var usageLenWithPadding = usage.Length + 2;
+      foreach (var rule in rules)
+      {
+        // build the string
+        Console.WriteLine(rule.IsRequired
+          ? $"{FlattenKeys(rule.Keys).PadLeft(usageLenWithPadding)}"
+          : $"[{FlattenKeys(rule.Keys).PadLeft(usageLenWithPadding)}]");
+      }
+
+      Console.WriteLine();
+
       // find the max key len
       var len = FindMaxKeyLength(rules);
       var lenWithPadding = len + 2;
