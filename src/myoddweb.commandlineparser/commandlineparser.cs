@@ -25,7 +25,7 @@ using myoddweb.commandlineparser.Rules;
 
 namespace myoddweb.commandlineparser
 {
-  public class CommandlineParser
+  public class CommandlineParser : ICommandlineParser
   {
     /// <summary>
     /// The patern we want our command line to lead with
@@ -68,44 +68,7 @@ namespace myoddweb.commandlineparser
       ValidateArgumentsData();
     }
 
-    public CommandlineParser Clone()
-    {
-      return new CommandlineParser(Arguments(false), _commandlineRules, _leadingPattern);
-    }
-
-    /// <summary>
-    /// Remove a key from the list and return the updated value.
-    /// </summary>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    public CommandlineParser Remove(string key)
-    {
-      if (!IsSet(key))
-      {
-        return this;
-      }
-
-      // adjust the key value
-      var adjustedKey = AdjustedKey(key);
-
-      // remove the key
-      _parsedArguments.Remove(adjustedKey);
-
-      // return us
-      return this;
-    }
-
-    //
-    // Summary:
-    //     Returns a string that represents the current object.
-    //
-    // Returns:
-    //     A string that represents the current object.
-    public override string ToString()
-    {
-      return string.Join(" ", Arguments(true));
-    }
-
+    #region Private Methods
     //
     // Summary:
     //     Returns a string that represents the current object.
@@ -159,13 +122,6 @@ namespace myoddweb.commandlineparser
     }
 
     /// <summary>
-    /// Get a value directly, with no default value.
-    /// </summary>
-    /// <param name="key">The key we are looking for.</param>
-    /// <returns></returns>
-    public string this[string key] => Get(key);
-
-    /// <summary>
     /// Check if the value is a valid key
     /// </summary>
     /// <param name="str"></param>
@@ -185,115 +141,6 @@ namespace myoddweb.commandlineparser
       }
       return key.ToLower();
     }
-
-    /// <summary>
-    /// Get a value given a template.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="key"></param>
-    /// <returns></returns>
-    public T Get<T>(string key)
-    {
-      var adjustedKey = AdjustedKey(key);
-      var s = Get(adjustedKey);
-      if (s == null)
-      {
-        return default(T);
-      }
-
-      try
-      {
-        return (T)Convert.ChangeType(s, typeof(T));
-      }
-      catch (FormatException)
-      {
-        return default(T);
-      }
-    }
-
-    /// <summary>
-    /// Get a value, and if it does not exist we will return the default.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="key"></param>
-    /// <param name="defaultValue"></param>
-    /// <returns></returns>
-    public T Get<T>(string key, T defaultValue)
-    {
-      var adjustedKey = AdjustedKey(key);
-      var s = Get(adjustedKey);
-      if (s == null)
-      {
-        return defaultValue;
-      }
-
-      try
-      {
-        return (T)Convert.ChangeType(s, typeof(T));
-      }
-      catch (FormatException)
-      {
-        return default(T);
-      }
-    }
-
-    /// <summary>
-    /// Get a value with a valid key
-    /// </summary>
-    /// <param name="key">the key we are looking for</param>
-    /// <param name="defaultValue">if the value does not exist, this is what we will return.</param>
-    /// <returns></returns>
-    public string Get(string key, string defaultValue)
-    {
-      // adjust the key value
-      var adjustedKey = AdjustedKey(key);
-
-      // return it if we have it, the default otherwise.
-      return !_parsedArguments.ContainsKey(adjustedKey) ? defaultValue : _parsedArguments[adjustedKey];
-    }
-
-    /// <summary>
-    /// Get a value with a valid key
-    /// </summary>
-    /// <param name="key">the key we are looking for</param>
-    /// <returns></returns>
-    public string Get(string key)
-    {
-      // adjust the key value
-      var adjustedKey = AdjustedKey(key);
-      if (_parsedArguments.ContainsKey(adjustedKey))
-      {
-        return _parsedArguments[adjustedKey];
-      }
-
-      // look for that key in our default arguments.
-      var defaultValue = _commandlineRules.FirstOrDefault( r => r.Keys.Contains( adjustedKey));
-
-      // return it if we have it, the default otherwise.
-      return defaultValue?.DefaultValue;
-    }
-
-    /// <summary>
-    /// Check if a value exists or not.
-    /// </summary>
-    /// <param name="key">the key we are looking for</param>
-    /// <returns></returns>
-    public bool IsSet(string key)
-    {
-      // adjust the key value
-      var adjustedKey = AdjustedKey(key);
-
-      // look if the value is simply set this is the default.
-      if (_parsedArguments.ContainsKey(adjustedKey))
-      {
-        return true;
-      }
-
-      // look for it as a rule
-      var rule = _commandlineRules.FirstOrDefault(r => r.Keys.Contains(adjustedKey));
-      return null != rule && rule.Keys.Any(ruleKey => _parsedArguments.ContainsKey(ruleKey));
-    }
-
 
     /// <summary>
     /// Parse the given arguments.
@@ -344,16 +191,133 @@ namespace myoddweb.commandlineparser
         }
       }
     }
+    #endregion
 
-    /// <summary>
-    /// Check if the help was requested or not.
-    /// </summary>
-    /// <returns></returns>
+    #region  ICommandlineParser
+    /// <inheritdoc />
+    public ICommandlineParser Clone()
+    {
+      return new CommandlineParser(Arguments(false), _commandlineRules, _leadingPattern);
+    }
+
+    /// <inheritdoc />
+    public ICommandlineParser Remove(string key)
+    {
+      if (!IsSet(key))
+      {
+        return this;
+      }
+
+      // adjust the key value
+      var adjustedKey = AdjustedKey(key);
+
+      // remove the key
+      _parsedArguments.Remove(adjustedKey);
+
+      // return us
+      return this;
+    }
+
+    /// <inheritdoc cref="ICommandlineParser" />
+    public override string ToString()
+    {
+      return string.Join(" ", Arguments(true));
+    }
+
+    /// <inheritdoc />
+    public string this[string key] => Get(key);
+
+    /// <inheritdoc />
+    public T Get<T>(string key)
+    {
+      var adjustedKey = AdjustedKey(key);
+      var s = Get(adjustedKey);
+      if (s == null)
+      {
+        return default(T);
+      }
+
+      try
+      {
+        return (T)Convert.ChangeType(s, typeof(T));
+      }
+      catch (FormatException)
+      {
+        return default(T);
+      }
+    }
+
+    /// <inheritdoc />
+    public T Get<T>(string key, T defaultValue)
+    {
+      var adjustedKey = AdjustedKey(key);
+      var s = Get(adjustedKey);
+      if (s == null)
+      {
+        return defaultValue;
+      }
+
+      try
+      {
+        return (T)Convert.ChangeType(s, typeof(T));
+      }
+      catch (FormatException)
+      {
+        return default(T);
+      }
+    }
+
+    /// <inheritdoc />
+    public string Get(string key, string defaultValue)
+    {
+      // adjust the key value
+      var adjustedKey = AdjustedKey(key);
+
+      // return it if we have it, the default otherwise.
+      return !_parsedArguments.ContainsKey(adjustedKey) ? defaultValue : _parsedArguments[adjustedKey];
+    }
+
+    /// <inheritdoc />
+    public string Get(string key)
+    {
+      // adjust the key value
+      var adjustedKey = AdjustedKey(key);
+      if (_parsedArguments.ContainsKey(adjustedKey))
+      {
+        return _parsedArguments[adjustedKey];
+      }
+
+      // look for that key in our default arguments.
+      var defaultValue = _commandlineRules.FirstOrDefault(r => r.Keys.Contains(adjustedKey));
+
+      // return it if we have it, the default otherwise.
+      return defaultValue?.DefaultValue;
+    }
+
+    /// <inheritdoc />
+    public bool IsSet(string key)
+    {
+      // adjust the key value
+      var adjustedKey = AdjustedKey(key);
+
+      // look if the value is simply set this is the default.
+      if (_parsedArguments.ContainsKey(adjustedKey))
+      {
+        return true;
+      }
+
+      // look for it as a rule
+      var rule = _commandlineRules.FirstOrDefault(r => r.Keys.Contains(adjustedKey));
+      return null != rule && rule.Keys.Any(ruleKey => _parsedArguments.ContainsKey(ruleKey));
+    }
+
+    /// <inheritdoc />
     public bool IsHelp()
     {
       // look for any rule that is help and that is set.
       return _commandlineRules.Where(c => c is IHelpCommandlineArgumentRule)
         .Any(commandlineArgumentRule => commandlineArgumentRule.Keys.Any(IsSet));
     }
+    #endregion
   }
 }
