@@ -13,6 +13,16 @@ Notable changes
   - `RequiredCommandlineArgumentRule` for required rules.
   - `OptionalCommandlineArgumentRule` for optional rules.
   - `HelpCommandlineArgumentRule` for help rules.
+- You can now have aliases
+  
+```csharp
+  ...
+  var arguments = new CommandlineParser(args, new CommandlineArgumentRules
+    {
+      new HelpCommandlineArgumentRule( new []{"help", "h"} ) }
+    });
+  ...
+```
 
 ### Changed
 
@@ -35,6 +45,7 @@ Changed to
   ...
   var arguments = new CommandlineParser(args, new CommandlineArgumentRules
     {
+      new HelpCommandlineArgumentRule( new []{"help", "h"} ) },
       new OptionalCommandlineArgumentRule( "config", "config.json" ) },
       new OptionalCommandlineArgumentRule( "install" ) },
       new OptionalCommandlineArgumentRule( "console" ) },

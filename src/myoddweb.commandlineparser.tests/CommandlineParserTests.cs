@@ -506,5 +506,63 @@ namespace myoddweb.commandlineparser.tests
 
       Assert.IsTrue(parser.IsHelp());
     }
+
+    [Test]
+    public void IsSetWhenAliasIsSet()
+    {
+      var args = new[] { "--a", "b", "--help" };
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( "a" ),
+        new HelpCommandlineArgumentRule( new []{"help", "h"})
+      });
+
+      // although the actual value in the argument is "help" we look for "h"
+      Assert.IsTrue(parser.IsSet("h"));
+      Assert.IsTrue(parser.IsSet("help"));
+    }
+
+    [Test]
+    public void IsSetWhenAliasIsSetButParamIsNot()
+    {
+      var args = new[] { "--a", "b", };
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( "a" ),
+        new HelpCommandlineArgumentRule( new []{"help", "h"})
+      });
+
+      // the param is not set for either values
+      Assert.IsFalse(parser.IsSet("h"));
+      Assert.IsFalse(parser.IsSet("help"));
+    }
+
+    [Test]
+    public void IsSetWhenValueIsSetButItIsNotARule()
+    {
+      var args = new[] { "--a", "b", "--b", "--help" };
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( "a" ),
+        new HelpCommandlineArgumentRule( new []{"help", "h"})
+      });
+
+      // 'b' is not one of our rules, but it is set.
+      Assert.IsTrue(parser.IsSet("b"));
+    }
+
+    [Test]
+    public void IsSetWhenValueIsNotSetAndItIsNotARule()
+    {
+      var args = new[] { "--a", "b", "--b", "--help" };
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( "a" ),
+        new HelpCommandlineArgumentRule( new []{"help", "h"})
+      });
+
+      // 'c' is not one of our rules, or set in the params
+      Assert.IsFalse(parser.IsSet("c"));
+    }
   }
 }

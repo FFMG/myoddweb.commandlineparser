@@ -40,10 +40,10 @@ namespace myoddweb.commandlineparser
     /// <param name="keys"></param>
     /// <param name="isRequired"></param>
     /// <param name="defaultValue"></param>
-    protected CommandlineArgumentRule(IEnumerable<string> keys, bool isRequired = false, string defaultValue = null)
+    protected CommandlineArgumentRule(IEnumerable<string> keys, bool isRequired, string defaultValue )
     {
       Keys = new List<string>();
-      foreach (var key in keys)
+      foreach (var key in keys ?? throw new ArgumentNullException( nameof(keys)))
       {
         var validKey = ValidKey(key);
         if (Keys.Contains(key))
@@ -51,6 +51,11 @@ namespace myoddweb.commandlineparser
           throw new ArgumentException("You cannot have duplicate keys.");
         }
         Keys.Add( validKey );
+      }
+
+      if (!Keys.Any())
+      {
+        throw new ArgumentException("The number of keys cannot be zero");
       }
       IsRequired = isRequired;
       DefaultValue = defaultValue;

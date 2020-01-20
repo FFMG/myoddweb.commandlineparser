@@ -281,8 +281,15 @@ namespace myoddweb.commandlineparser
       // adjust the key value
       var adjustedKey = AdjustedKey(key);
 
-      // look for that key in our default arguments.
-      return _parsedArguments.ContainsKey(adjustedKey);
+      // look if the value is simply set this is the default.
+      if (_parsedArguments.ContainsKey(adjustedKey))
+      {
+        return true;
+      }
+
+      // look for it as a rule
+      var rule = _commandlineRules.FirstOrDefault(r => r.Keys.Contains(adjustedKey));
+      return null != rule && rule.Keys.Any(ruleKey => _parsedArguments.ContainsKey(ruleKey));
     }
 
 

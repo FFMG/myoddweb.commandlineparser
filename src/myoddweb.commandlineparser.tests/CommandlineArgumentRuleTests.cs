@@ -19,6 +19,7 @@
 //    SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace myoddweb.commandlineparser.tests
@@ -189,6 +190,60 @@ namespace myoddweb.commandlineparser.tests
       Assert.Throws<ArgumentException>(() =>
       {
         var _ = new RequiredCommandlineArgumentRule(new[] { "a", "a" });
+      });
+    }
+
+    [Test]
+    public void OptionalKeysCannotBeEmpty()
+    {
+      Assert.Throws<ArgumentException>(() =>
+      {
+        var _ = new OptionalCommandlineArgumentRule( new string[]{});
+      });
+    }
+
+    [Test]
+    public void RequiredKeysCannotBeEmpty()
+    {
+      Assert.Throws<ArgumentException>(() =>
+      {
+        var _ = new RequiredCommandlineArgumentRule(new string[] { });
+      });
+    }
+
+    [Test]
+    public void HelpKeysCannotBeEmpty()
+    {
+      Assert.Throws<ArgumentException>(() =>
+      {
+        var _ = new HelpCommandlineArgumentRule(new string[] { });
+      });
+    }
+
+    [Test]
+    public void OptionalKeysCannotBeNull()
+    {
+      Assert.Throws<ArgumentNullException>(() =>
+      {
+        var _ = new OptionalCommandlineArgumentRule((List<string>)null);
+      });
+    }
+
+    [Test]
+    public void RequiredKeysCannotBeNull()
+    {
+      Assert.Throws<ArgumentNullException>(() =>
+      {
+        var _ = new RequiredCommandlineArgumentRule((List<string>)null);
+      });
+    }
+
+    [Test]
+    public void HelpKeysCannotBeNull()
+    {
+      Assert.Throws<ArgumentNullException>(() =>
+      {
+        var _ = new HelpCommandlineArgumentRule( (List<string>)null );
       });
     }
   }
