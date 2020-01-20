@@ -17,33 +17,20 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
-
 using System.Collections.Generic;
 
-namespace myoddweb.commandlineparser
+namespace myoddweb.commandlineparser.Rules
 {
-  public interface ICommandlineArgumentRule
+  public class RequiredCommandlineArgumentRule : CommandlineArgumentRule
   {
-    /// <summary>
-    /// The keys we are looking for.
-    /// </summary>
-    IList<string> Keys { get; }
+    public RequiredCommandlineArgumentRule(string key) :
+      this( new []{key})
+    {
+    }
 
-    /// <summary>
-    /// Check if the value is required or not.
-    /// </summary>
-    bool IsRequired { get; }
-
-    /// <summary>
-    /// The default value, (null by default).
-    /// </summary>
-    string DefaultValue { get; }
-
-    /// <summary>
-    /// Check if the given value matches the key and/or aliases
-    /// </summary>
-    /// <param name="given"></param>
-    /// <returns></returns>
-    bool IsKeyOrAlias(string given);
+    public RequiredCommandlineArgumentRule(IEnumerable<string> keys) :
+      base(keys, true, null)
+    {
+    }
   }
 }

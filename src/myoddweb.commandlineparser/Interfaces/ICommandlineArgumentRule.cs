@@ -17,49 +17,32 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace myoddweb.commandlineparser
+namespace myoddweb.commandlineparser.Interfaces
 {
-  /// <inheritdoc cref="ICommandlineArgumentRules" />
-  public class CommandlineArgumentRules : ICommandlineArgumentRules
+  public interface ICommandlineArgumentRule
   {
     /// <summary>
-    /// The list of rules.
+    /// The keys we are looking for.
     /// </summary>
-    private readonly List<ICommandlineArgumentRule> _rules = new List<ICommandlineArgumentRule>();
-
-    /// <inheritdoc cref="ICommandlineArgumentRules" />
-    public void Add(ICommandlineArgumentRule rule)
-    {
-      _rules.Add( rule );
-      ThrowIfDuplicates();
-    }
+    IList<string> Keys { get; }
 
     /// <summary>
-    /// Do not allow duplicate keys and aliases.
+    /// Check if the value is required or not.
     /// </summary>
-    private void ThrowIfDuplicates()
-    {
-      if (_rules.SelectMany( x => x.Keys ).GroupBy(y => y).Any(g => g.Count() > 1))
-      {
-        throw new ArgumentException( "You cannot have duplicate keys." );
-      }
-    }
+    bool IsRequired { get; }
 
-    /// <inheritdoc />
-    public IEnumerator<ICommandlineArgumentRule> GetEnumerator()
-    {
-      return _rules.GetEnumerator();
-    }
+    /// <summary>
+    /// The default value, (null by default).
+    /// </summary>
+    string DefaultValue { get; }
 
-    /// <inheritdoc />
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-      return this.GetEnumerator();
-    }
+    /// <summary>
+    /// Check if the given value matches the key and/or aliases
+    /// </summary>
+    /// <param name="given"></param>
+    /// <returns></returns>
+    bool IsKeyOrAlias(string given);
   }
 }

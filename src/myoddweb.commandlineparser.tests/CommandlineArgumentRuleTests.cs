@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using myoddweb.commandlineparser.Rules;
 using NUnit.Framework;
 
 namespace myoddweb.commandlineparser.tests

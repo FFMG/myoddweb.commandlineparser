@@ -20,6 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using myoddweb.commandlineparser.Interfaces;
+using myoddweb.commandlineparser.Rules;
 
 namespace myoddweb.commandlineparser
 {

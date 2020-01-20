@@ -17,48 +17,9 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
-using System;
-using myoddweb.commandlineparser.Rules;
-using NUnit.Framework;
-
-namespace myoddweb.commandlineparser.tests
+namespace myoddweb.commandlineparser.Interfaces
 {
-  [TestFixture]
-  internal class CommandlineArgumentRulesTests
+  public interface IHelpCommandlineArgumentRule
   {
-    [Test]
-    public void YouCannotHaveDuplicates()
-    {
-      Assert.Throws<ArgumentException>(() =>
-      {
-        var _ = new CommandlineArgumentRules
-        {
-          new OptionalCommandlineArgumentRule("a"),
-          new OptionalCommandlineArgumentRule("a"),
-        };
-      });
-    }
-
-    [Test]
-    public void YouCannotAddDuplicatesOptional()
-    {
-      var parser = new CommandlineArgumentRules
-      {
-        new OptionalCommandlineArgumentRule("a")
-      };
-      Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule("a")); });
-    }
-
-    [Test]
-    public void YouCannotAddMultipleDuplicatesOptional()
-    {
-      var parser = new CommandlineArgumentRules
-      {
-        new OptionalCommandlineArgumentRule( new [] {"a","b", "c"} )
-      };
-
-      // alias 'a' is duplicated.
-      Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule( new []{"x", "y", "a"})); });
-    }
   }
 }

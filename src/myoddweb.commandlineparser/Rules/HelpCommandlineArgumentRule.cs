@@ -17,48 +17,21 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
-using System;
-using myoddweb.commandlineparser.Rules;
-using NUnit.Framework;
+using System.Collections.Generic;
+using myoddweb.commandlineparser.Interfaces;
 
-namespace myoddweb.commandlineparser.tests
+namespace myoddweb.commandlineparser.Rules
 {
-  [TestFixture]
-  internal class CommandlineArgumentRulesTests
+  public class HelpCommandlineArgumentRule : CommandlineArgumentRule, IHelpCommandlineArgumentRule
   {
-    [Test]
-    public void YouCannotHaveDuplicates()
+    public HelpCommandlineArgumentRule(string key) :
+      this( new []{key} )
     {
-      Assert.Throws<ArgumentException>(() =>
-      {
-        var _ = new CommandlineArgumentRules
-        {
-          new OptionalCommandlineArgumentRule("a"),
-          new OptionalCommandlineArgumentRule("a"),
-        };
-      });
     }
 
-    [Test]
-    public void YouCannotAddDuplicatesOptional()
+    public HelpCommandlineArgumentRule(IEnumerable<string> keys) :
+      base(keys, false, null)
     {
-      var parser = new CommandlineArgumentRules
-      {
-        new OptionalCommandlineArgumentRule("a")
-      };
-      Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule("a")); });
-    }
-
-    [Test]
-    public void YouCannotAddMultipleDuplicatesOptional()
-    {
-      var parser = new CommandlineArgumentRules
-      {
-        new OptionalCommandlineArgumentRule( new [] {"a","b", "c"} )
-      };
-
-      // alias 'a' is duplicated.
-      Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule( new []{"x", "y", "a"})); });
     }
   }
 }

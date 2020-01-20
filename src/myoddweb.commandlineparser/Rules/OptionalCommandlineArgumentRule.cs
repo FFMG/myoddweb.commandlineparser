@@ -18,47 +18,38 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 using System;
-using myoddweb.commandlineparser.Rules;
-using NUnit.Framework;
+using System.Collections.Generic;
 
-namespace myoddweb.commandlineparser.tests
+namespace myoddweb.commandlineparser.Rules
 {
-  [TestFixture]
-  internal class CommandlineArgumentRulesTests
+  public class OptionalCommandlineArgumentRule : CommandlineArgumentRule
   {
-    [Test]
-    public void YouCannotHaveDuplicates()
+    public OptionalCommandlineArgumentRule(string key) :
+      this( new []{key})
     {
-      Assert.Throws<ArgumentException>(() =>
-      {
-        var _ = new CommandlineArgumentRules
-        {
-          new OptionalCommandlineArgumentRule("a"),
-          new OptionalCommandlineArgumentRule("a"),
-        };
-      });
     }
 
-    [Test]
-    public void YouCannotAddDuplicatesOptional()
+    public OptionalCommandlineArgumentRule(string key, string defaultValue ) :
+      this( new []{key}, defaultValue)
     {
-      var parser = new CommandlineArgumentRules
+      if (null == defaultValue)
       {
-        new OptionalCommandlineArgumentRule("a")
-      };
-      Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule("a")); });
+        throw new ArgumentNullException(nameof(defaultValue), "You cannot pass a null argument as a default value.");
+      }
     }
 
-    [Test]
-    public void YouCannotAddMultipleDuplicatesOptional()
+    public OptionalCommandlineArgumentRule(IEnumerable<string> keys) :
+      base( keys, false, null)
     {
-      var parser = new CommandlineArgumentRules
-      {
-        new OptionalCommandlineArgumentRule( new [] {"a","b", "c"} )
-      };
+    }
 
-      // alias 'a' is duplicated.
-      Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule( new []{"x", "y", "a"})); });
+    public OptionalCommandlineArgumentRule(IEnumerable<string> keys, string defaultValue) :
+      base( keys, false, defaultValue)
+    {
+      if (null == defaultValue)
+      {
+        throw new ArgumentNullException(nameof(defaultValue), "You cannot pass a null argument as a default value.");
+      }
     }
   }
 }

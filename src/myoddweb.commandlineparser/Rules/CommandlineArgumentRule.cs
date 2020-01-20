@@ -20,8 +20,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using myoddweb.commandlineparser.Interfaces;
 
-namespace myoddweb.commandlineparser
+namespace myoddweb.commandlineparser.Rules
 {
   public class CommandlineArgumentRule : ICommandlineArgumentRule
   {

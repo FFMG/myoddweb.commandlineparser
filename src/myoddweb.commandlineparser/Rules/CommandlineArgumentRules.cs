@@ -18,47 +18,49 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 using System;
-using myoddweb.commandlineparser.Rules;
-using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using myoddweb.commandlineparser.Interfaces;
 
-namespace myoddweb.commandlineparser.tests
+namespace myoddweb.commandlineparser.Rules
 {
-  [TestFixture]
-  internal class CommandlineArgumentRulesTests
+  /// <inheritdoc cref="ICommandlineArgumentRules" />
+  public class CommandlineArgumentRules : ICommandlineArgumentRules
   {
-    [Test]
-    public void YouCannotHaveDuplicates()
+    /// <summary>
+    /// The list of rules.
+    /// </summary>
+    private readonly List<ICommandlineArgumentRule> _rules = new List<ICommandlineArgumentRule>();
+
+    /// <inheritdoc cref="ICommandlineArgumentRules" />
+    public void Add(ICommandlineArgumentRule rule)
     {
-      Assert.Throws<ArgumentException>(() =>
-      {
-        var _ = new CommandlineArgumentRules
-        {
-          new OptionalCommandlineArgumentRule("a"),
-          new OptionalCommandlineArgumentRule("a"),
-        };
-      });
+      _rules.Add( rule );
+      ThrowIfDuplicates();
     }
 
-    [Test]
-    public void YouCannotAddDuplicatesOptional()
+    /// <summary>
+    /// Do not allow duplicate keys and aliases.
+    /// </summary>
+    private void ThrowIfDuplicates()
     {
-      var parser = new CommandlineArgumentRules
+      if (_rules.SelectMany( x => x.Keys ).GroupBy(y => y).Any(g => g.Count() > 1))
       {
-        new OptionalCommandlineArgumentRule("a")
-      };
-      Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule("a")); });
+        throw new ArgumentException( "You cannot have duplicate keys." );
+      }
     }
 
-    [Test]
-    public void YouCannotAddMultipleDuplicatesOptional()
+    /// <inheritdoc />
+    public IEnumerator<ICommandlineArgumentRule> GetEnumerator()
     {
-      var parser = new CommandlineArgumentRules
-      {
-        new OptionalCommandlineArgumentRule( new [] {"a","b", "c"} )
-      };
+      return _rules.GetEnumerator();
+    }
 
-      // alias 'a' is duplicated.
-      Assert.Throws<ArgumentException>(() => { parser.Add(new OptionalCommandlineArgumentRule( new []{"x", "y", "a"})); });
+    /// <inheritdoc />
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+      return this.GetEnumerator();
     }
   }
 }
