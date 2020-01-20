@@ -17,14 +17,13 @@
 //    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
-using System.Collections.Generic;
 
 namespace myoddweb.commandlineparser.Interfaces
 {
   /// <summary>
   /// List of rules
   /// </summary>
-  public interface ICommandlineArgumentRules : IEnumerable<ICommandlineArgumentRule>
+  public interface ICommandlineArgumentRules : IReadOnlyCommandlineArgumentRules
   {
     /// <summary>
     /// Add the rule to our list of rules.

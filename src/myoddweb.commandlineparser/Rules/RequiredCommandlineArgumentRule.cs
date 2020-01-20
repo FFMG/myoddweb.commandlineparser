@@ -28,8 +28,8 @@ namespace myoddweb.commandlineparser.Rules
     {
     }
 
-    public RequiredCommandlineArgumentRule(IEnumerable<string> keys) :
-      base(keys, true, null)
+    public RequiredCommandlineArgumentRule(IEnumerable<string> keys, string description = null) :
+      base(keys, true, description, null)
     {
     }
   }

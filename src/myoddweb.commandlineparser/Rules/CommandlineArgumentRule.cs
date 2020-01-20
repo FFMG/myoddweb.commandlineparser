@@ -35,13 +35,17 @@ namespace myoddweb.commandlineparser.Rules
     /// <inheritdoc />
     public IList<string> Keys { get;  }
 
+    /// <inheritdoc />
+    public string Description { get; }
+
     /// <summary>
     /// Create an argument with all the values.
     /// </summary>
     /// <param name="keys"></param>
     /// <param name="isRequired"></param>
+    /// <param name="description"></param>
     /// <param name="defaultValue"></param>
-    protected CommandlineArgumentRule(IEnumerable<string> keys, bool isRequired, string defaultValue )
+    protected CommandlineArgumentRule(IEnumerable<string> keys, bool isRequired, string description, string defaultValue )
     {
       Keys = new List<string>();
       foreach (var key in keys ?? throw new ArgumentNullException( nameof(keys)))
@@ -60,6 +64,7 @@ namespace myoddweb.commandlineparser.Rules
       }
       IsRequired = isRequired;
       DefaultValue = defaultValue;
+      Description = description ?? "";
     }
     
     /// <summary>

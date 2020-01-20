@@ -195,6 +195,9 @@ namespace myoddweb.commandlineparser
 
     #region  ICommandlineParser
     /// <inheritdoc />
+    public IReadOnlyCommandlineArgumentRules Rules => _commandlineRules;
+
+    /// <inheritdoc />
     public ICommandlineParser Clone()
     {
       return new CommandlineParser(Arguments(false), _commandlineRules, _leadingPattern);

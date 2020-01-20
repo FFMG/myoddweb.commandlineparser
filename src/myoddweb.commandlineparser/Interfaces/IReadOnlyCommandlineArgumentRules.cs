@@ -21,33 +21,10 @@ using System.Collections.Generic;
 
 namespace myoddweb.commandlineparser.Interfaces
 {
-  public interface ICommandlineArgumentRule
+  /// <summary>
+  /// Read only version of the command line rules
+  /// </summary>
+  public interface IReadOnlyCommandlineArgumentRules : IEnumerable<ICommandlineArgumentRule>
   {
-    /// <summary>
-    /// The keys we are looking for.
-    /// </summary>
-    IList<string> Keys { get; }
-
-    /// <summary>
-    /// The rule description.
-    /// </summary>
-    string Description { get; }
-
-    /// <summary>
-    /// Check if the value is required or not.
-    /// </summary>
-    bool IsRequired { get; }
-
-    /// <summary>
-    /// The default value, (null by default).
-    /// </summary>
-    string DefaultValue { get; }
-
-    /// <summary>
-    /// Check if the given value matches the key and/or aliases
-    /// </summary>
-    /// <param name="given"></param>
-    /// <returns></returns>
-    bool IsKeyOrAlias(string given);
   }
 }

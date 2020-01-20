@@ -29,8 +29,8 @@ namespace myoddweb.commandlineparser.Rules
     {
     }
 
-    public HelpCommandlineArgumentRule(IEnumerable<string> keys) :
-      base(keys, false, null)
+    public HelpCommandlineArgumentRule(IEnumerable<string> keys, string description = "Display the help message") :
+      base(keys, false, description, null)
     {
     }
   }

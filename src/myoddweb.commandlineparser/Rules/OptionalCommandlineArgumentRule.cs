@@ -24,13 +24,13 @@ namespace myoddweb.commandlineparser.Rules
 {
   public class OptionalCommandlineArgumentRule : CommandlineArgumentRule
   {
-    public OptionalCommandlineArgumentRule(string key) :
-      this( new []{key})
+    public OptionalCommandlineArgumentRule(string key, string description = null) :
+      this( new []{key}, description )
     {
     }
 
-    public OptionalCommandlineArgumentRule(string key, string defaultValue ) :
-      this( new []{key}, defaultValue)
+    public OptionalCommandlineArgumentRule(string key, string defaultValue, string description = null) :
+      this( new []{key}, description, defaultValue)
     {
       if (null == defaultValue)
       {
@@ -38,13 +38,13 @@ namespace myoddweb.commandlineparser.Rules
       }
     }
 
-    public OptionalCommandlineArgumentRule(IEnumerable<string> keys) :
-      base( keys, false, null)
+    public OptionalCommandlineArgumentRule(IEnumerable<string> keys, string description = null) :
+      base( keys, false, description, null)
     {
     }
 
-    public OptionalCommandlineArgumentRule(IEnumerable<string> keys, string defaultValue) :
-      base( keys, false, defaultValue)
+    public OptionalCommandlineArgumentRule(IEnumerable<string> keys, string defaultValue, string description = null) :
+      base( keys, false, description, defaultValue)
     {
       if (null == defaultValue)
       {

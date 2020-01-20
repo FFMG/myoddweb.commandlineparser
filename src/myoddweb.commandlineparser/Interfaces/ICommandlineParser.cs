@@ -10,6 +10,11 @@
     string this[string key] { get; }
 
     /// <summary>
+    /// Get the all the rules.
+    /// </summary>
+    IReadOnlyCommandlineArgumentRules Rules { get; }
+
+    /// <summary>
     /// Get a value given a template.
     /// </summary>
     /// <typeparam name="T"></typeparam>
