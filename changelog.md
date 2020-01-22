@@ -8,7 +8,25 @@ Notable changes
 
 ### Changed
 
+- The command line leading pattern cannot be null.
+
 ### Fixed
+
+- `RequiredCommandlineArgumentRule` with a single key did not accept a description.
+
+  ```csharp
+    ...
+    var helpRule = new RequiredCommandlineArgumentRule( "h", "This is the required command" );
+    ...
+  ```
+
+- `HelpCommandlineArgumentRule` with a single key did not accept a description.
+
+  ```csharp
+    ...
+    var helpRule = new HelpCommandlineArgumentRule( "h", "This is the help command" );
+    ...
+  ```
 
 ### Removed
 

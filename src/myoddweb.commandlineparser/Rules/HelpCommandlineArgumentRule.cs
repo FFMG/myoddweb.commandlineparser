@@ -24,12 +24,17 @@ namespace myoddweb.commandlineparser.Rules
 {
   public class HelpCommandlineArgumentRule : CommandlineArgumentRule, IHelpCommandlineArgumentRule
   {
-    public HelpCommandlineArgumentRule(string key) :
-      this( new []{key} )
+    /// <summary>
+    /// Default message we want to display.
+    /// </summary>
+    private const string DefaultDescription = "Display the help message";
+
+    public HelpCommandlineArgumentRule(string key, string description = DefaultDescription) :
+      this( new []{key}, description )
     {
     }
 
-    public HelpCommandlineArgumentRule(IEnumerable<string> keys, string description = "Display the help message") :
+    public HelpCommandlineArgumentRule(IEnumerable<string> keys, string description = DefaultDescription) :
       base(keys, false, description, null)
     {
     }

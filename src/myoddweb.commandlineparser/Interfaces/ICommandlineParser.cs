@@ -10,6 +10,12 @@
     string this[string key] { get; }
 
     /// <summary>
+    /// The patern we want our command line to lead with
+    /// For example, "-hello world" the leading pattern is '-', (it can be more than one char).
+    /// </summary>
+    string LeadingPattern { get; }
+
+    /// <summary>
     /// Get the all the rules.
     /// </summary>
     IReadOnlyCommandlineArgumentRules Rules { get; }

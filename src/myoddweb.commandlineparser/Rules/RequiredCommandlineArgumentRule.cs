@@ -23,8 +23,8 @@ namespace myoddweb.commandlineparser.Rules
 {
   public class RequiredCommandlineArgumentRule : CommandlineArgumentRule
   {
-    public RequiredCommandlineArgumentRule(string key) :
-      this( new []{key})
+    public RequiredCommandlineArgumentRule(string key, string description = null) :
+      this( new []{key}, description )
     {
     }
 

@@ -28,12 +28,6 @@ namespace myoddweb.commandlineparser
   public class CommandlineParser : ICommandlineParser
   {
     /// <summary>
-    /// The patern we want our command line to lead with
-    /// For example, "-hello world" the leading pattern is '-', (it can be more than one char).
-    /// </summary>
-    private readonly string _leadingPattern;
-
-    /// <summary>
     /// A dictionalry with key->value of all the arguments.
     /// </summary>
     private readonly IDictionary<string, string> _parsedArguments;
@@ -53,7 +47,7 @@ namespace myoddweb.commandlineparser
     public CommandlineParser(IReadOnlyList<string> args, ICommandlineArgumentRules commandlineRules = null, string leadingPattern = "--")
     {
       // the leading pattern
-      _leadingPattern = leadingPattern;
+      LeadingPattern = leadingPattern ?? throw new ArgumentNullException( nameof(leadingPattern));
 
       // set the arguments data.
       _commandlineRules = commandlineRules ?? new CommandlineArgumentRules();
@@ -80,7 +74,7 @@ namespace myoddweb.commandlineparser
       var values = new List<string>();
       foreach (var argumentAndKey in _parsedArguments)
       {
-        values.Add($"{_leadingPattern}{argumentAndKey.Key}");
+        values.Add($"{LeadingPattern}{argumentAndKey.Key}");
         if (!(argumentAndKey.Value?.Length > 0))
         {
           continue;
@@ -129,7 +123,7 @@ namespace myoddweb.commandlineparser
     private bool IsKey(string str)
     {
       // check for the leading pattern
-      return str.StartsWith(_leadingPattern);
+      return str.StartsWith(LeadingPattern);
     }
 
     private static string AdjustedKey(string key)
@@ -166,7 +160,7 @@ namespace myoddweb.commandlineparser
 
         if (IsKey(args[i]))
         {
-          key = args[i].Substring(_leadingPattern.Length);
+          key = args[i].Substring(LeadingPattern.Length);
 
           if (i + 1 < args.Count && !IsKey(args[i + 1]))
           {
@@ -195,12 +189,15 @@ namespace myoddweb.commandlineparser
 
     #region  ICommandlineParser
     /// <inheritdoc />
+    public string LeadingPattern { get; }
+
+    /// <inheritdoc />
     public IReadOnlyCommandlineArgumentRules Rules => _commandlineRules;
 
     /// <inheritdoc />
     public ICommandlineParser Clone()
     {
-      return new CommandlineParser(Arguments(false), _commandlineRules, _leadingPattern);
+      return new CommandlineParser(Arguments(false), _commandlineRules, LeadingPattern);
     }
 
     /// <inheritdoc />
