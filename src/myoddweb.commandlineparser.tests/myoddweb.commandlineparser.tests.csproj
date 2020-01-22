@@ -15,5 +15,9 @@
   <ItemGroup>
     <ProjectReference Include="..\myoddweb.commandlineparser\myoddweb.commandlineparser.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="OutputFormatter\" />
+  </ItemGroup>
 
 </Project>
