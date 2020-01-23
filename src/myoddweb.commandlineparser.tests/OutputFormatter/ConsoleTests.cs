@@ -48,7 +48,7 @@ namespace myoddweb.commandlineparser.tests.OutputFormatter
         new HelpCommandlineArgumentRule( "a", "This is help" )
       });
 
-      var output = new ConsoleOutputFormatter( parser.Rules, parser.LeadingPattern );
+      var output = new ConsoleOutputFormatter( parser );
       var l = $"Usage: {AppName}";
       output.Write();
       var expected =
@@ -71,7 +71,7 @@ namespace myoddweb.commandlineparser.tests.OutputFormatter
         new RequiredCommandlineArgumentRule( new []{"a", "b"}, "Required AB" )
       });
 
-      var output = new ConsoleOutputFormatter(parser.Rules, parser.LeadingPattern);
+      var output = new ConsoleOutputFormatter(parser);
       var l = $"Usage: {AppName}";
       output.Write();
       var expected =
@@ -95,13 +95,13 @@ namespace myoddweb.commandlineparser.tests.OutputFormatter
         new RequiredCommandlineArgumentRule( "b", "Required" )
       });
 
-      var output = new ConsoleOutputFormatter(parser.Rules, parser.LeadingPattern);
+      var output = new ConsoleOutputFormatter(parser);
       var l = $"Usage: {AppName}";
       output.Write();
       var expected =
         $"{l}\r\n" +
         (new string(' ', l.Length + 2)) + "--b\r\n" +
-        (new string(' ', l.Length + 2)) + "[--a=Default A]\r\n" +
+        (new string(' ', l.Length + 2)) + "[--a=<Default A>]\r\n" +
         "\r\n" +
         "a  :Optional\r\n" +
         "b  :Required\r\n";
@@ -109,7 +109,7 @@ namespace myoddweb.commandlineparser.tests.OutputFormatter
     }
 
     [Test]
-    public void DefaultValuesAreGiven()
+    public void OptionalRuleDefaultValuesAreGiven()
     {
       using var sw = new StringWriter();
       Console.SetOut(sw);
@@ -121,13 +121,39 @@ namespace myoddweb.commandlineparser.tests.OutputFormatter
         new OptionalCommandlineArgumentRule( "b", "Default B", "Optional B")
       });
 
-      var output = new ConsoleOutputFormatter(parser.Rules, parser.LeadingPattern);
+      var output = new ConsoleOutputFormatter(parser);
       var l = $"Usage: {AppName}";
       output.Write();
       var expected =
         $"{l}\r\n" +
-        (new string(' ', l.Length + 2)) + "[--a=Default A]\r\n" +
-        (new string(' ', l.Length + 2)) + "[--b=Default B]\r\n" +
+        (new string(' ', l.Length + 2)) + "[--a=<Default A>]\r\n" +
+        (new string(' ', l.Length + 2)) + "[--b=<Default B>]\r\n" +
+        "\r\n" +
+        "a  :Optional A\r\n" +
+        "b  :Optional B\r\n";
+      Assert.AreEqual(expected, sw.ToString());
+    }
+
+    [Test]
+    public void OptionalRuleDefaultValuesAreNotGiven()
+    {
+      using var sw = new StringWriter();
+      Console.SetOut(sw);
+
+      var args = new[] { "--a", "b", "--b", "b" };
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( "a", "Default A", "Optional A"),
+        new OptionalCommandlineArgumentRule( "b", null, "Optional B")
+      });
+
+      var output = new ConsoleOutputFormatter(parser);
+      var l = $"Usage: {AppName}";
+      output.Write();
+      var expected =
+        $"{l}\r\n" +
+        (new string(' ', l.Length + 2)) + "[--a=<Default A>]\r\n" +
+        (new string(' ', l.Length + 2)) + "[--b]\r\n" +
         "\r\n" +
         "a  :Optional A\r\n" +
         "b  :Optional B\r\n";

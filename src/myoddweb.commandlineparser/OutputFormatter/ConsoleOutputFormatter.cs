@@ -43,6 +43,11 @@ namespace myoddweb.commandlineparser.OutputFormatter
       }
     }
 
+    public ConsoleOutputFormatter(ICommandlineParser parser) :
+      this( parser.Rules, parser.LeadingPattern )
+    {
+    }
+
     public ConsoleOutputFormatter(IReadOnlyCommandlineArgumentRules rules, string leadingPattern)
     {
       _rules = rules ?? throw new ArgumentNullException( nameof(rules));
@@ -96,7 +101,7 @@ namespace myoddweb.commandlineparser.OutputFormatter
       var line = FlattenKeys(rule.Keys, true);
       if (rule.DefaultValue != null)
       {
-        line = $"{line}={rule.DefaultValue}";
+        line = $"{line}=<{rule.DefaultValue}>";
       }
       if (!rule.IsRequired)
       {
