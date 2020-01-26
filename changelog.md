@@ -12,6 +12,7 @@ Notable changes
 
 ### Fixed
 
+- Given values with aliases were not being parsed properly.
 - `RequiredCommandlineArgumentRule` with a single key did not accept a description.
 
   ```csharp

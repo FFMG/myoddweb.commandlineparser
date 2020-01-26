@@ -126,14 +126,19 @@ namespace myoddweb.commandlineparser
       return str.StartsWith(LeadingPattern);
     }
 
-    private static string AdjustedKey(string key)
+    /// <summary>
+    /// Make sure that the given key is lower case and trimmed.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private static string CleanKeyValue(string key)
     {
       if (null == key)
       {
         // the key cannot be null.
         throw new ArgumentNullException(nameof(key));
       }
-      return key.ToLower();
+      return key.ToLower().Trim();
     }
 
     /// <summary>
@@ -181,7 +186,7 @@ namespace myoddweb.commandlineparser
         }
         if (key != null)
         {
-          _parsedArguments[AdjustedKey(key)] = val;
+          _parsedArguments[CleanKeyValue(key)] = val;
         }
       }
     }
@@ -209,7 +214,7 @@ namespace myoddweb.commandlineparser
       }
 
       // adjust the key value
-      var adjustedKey = AdjustedKey(key);
+      var adjustedKey = GetAdjustedKeyFromActualOrAliasKey(key);
 
       // remove the key
       _parsedArguments.Remove(adjustedKey);
@@ -230,8 +235,7 @@ namespace myoddweb.commandlineparser
     /// <inheritdoc />
     public T Get<T>(string key)
     {
-      var adjustedKey = AdjustedKey(key);
-      var s = Get(adjustedKey);
+      var s = Get(key);
       if (s == null)
       {
         return default(T);
@@ -250,8 +254,7 @@ namespace myoddweb.commandlineparser
     /// <inheritdoc />
     public T Get<T>(string key, T defaultValue)
     {
-      var adjustedKey = AdjustedKey(key);
-      var s = Get(adjustedKey);
+      var s = Get(key);
       if (s == null)
       {
         return defaultValue;
@@ -271,7 +274,7 @@ namespace myoddweb.commandlineparser
     public string Get(string key, string defaultValue)
     {
       // adjust the key value
-      var adjustedKey = AdjustedKey(key);
+      var adjustedKey = GetAdjustedKeyFromActualOrAliasKey(key);
 
       // return it if we have it, the default otherwise.
       return !_parsedArguments.ContainsKey(adjustedKey) ? defaultValue : _parsedArguments[adjustedKey];
@@ -281,24 +284,60 @@ namespace myoddweb.commandlineparser
     public string Get(string key)
     {
       // adjust the key value
-      var adjustedKey = AdjustedKey(key);
+      var adjustedKey = GetAdjustedKeyFromActualOrAliasKey(key);
       if (_parsedArguments.ContainsKey(adjustedKey))
       {
         return _parsedArguments[adjustedKey];
       }
 
       // look for that key in our default arguments.
-      var defaultValue = _commandlineRules.FirstOrDefault(r => r.Keys.Contains(adjustedKey));
+      var possible = _commandlineRules.FirstOrDefault(r => r.Keys.Contains(adjustedKey));
 
       // return it if we have it, the default otherwise.
-      return defaultValue?.DefaultValue;
+      return possible?.DefaultValue;
+    }
+
+    /// <summary>
+    /// Given a possible key value we get the actual value of they key
+    /// That matches what the user gave us.
+    /// </summary>
+    /// <param name="actualOrAliasKey"></param>
+    /// <returns></returns>
+    private string GetAdjustedKeyFromActualOrAliasKey( string actualOrAliasKey )
+    {
+      var adjustedActualOrAliasKey = CleanKeyValue(actualOrAliasKey);
+
+      // look for that key in our default arguments.
+      var possible = _commandlineRules.FirstOrDefault(r => r.Keys.Contains(adjustedActualOrAliasKey));
+
+      // if we cannot find that key
+      // then we assume that the 'actual' key is what was given to us
+      // and we just return the adjusted value
+      if (null == possible)
+      {
+        return adjustedActualOrAliasKey;
+      }
+
+      // find the first adjusted value that exists in the arguments
+      foreach (var possibleKey in possible.Keys)
+      {
+        var possibleAdjustedKey = CleanKeyValue(possibleKey);
+        if (_parsedArguments.ContainsKey(possibleAdjustedKey))
+        {
+          return possibleAdjustedKey;
+        }
+      }
+
+      // we could not find that key at all
+      // so we do not have any adjusted and/or actual value.
+      return adjustedActualOrAliasKey;
     }
 
     /// <inheritdoc />
     public bool IsSet(string key)
     {
       // adjust the key value
-      var adjustedKey = AdjustedKey(key);
+      var adjustedKey = GetAdjustedKeyFromActualOrAliasKey(key);
 
       // look if the value is simply set this is the default.
       if (_parsedArguments.ContainsKey(adjustedKey))
