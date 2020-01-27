@@ -1,4 +1,4 @@
-# Myoddweb.CommandlineParser [![Release](https://img.shields.io/badge/release-v0.1.4-brightgreen.png?style=flat)](https://github.com/FFMG/myoddweb.commandlineparser/)
+# Myoddweb.CommandlineParser [![Release](https://img.shields.io/badge/release-v0.1.5-brightgreen.png?style=flat)](https://github.com/FFMG/myoddweb.commandlineparser/)
 A very simple c# command line arguments Parser
 
 ## What it does

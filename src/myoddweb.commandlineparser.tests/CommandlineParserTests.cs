@@ -240,6 +240,54 @@ namespace myoddweb.commandlineparser.tests
     }
 
     [Test]
+    public void TestGetTheValueWithAliasses()
+    {
+      // the arguments
+      var args = new[] { "--a", "12" };
+
+      // 'b' is missing.
+      // the second argument is present
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new RequiredCommandlineArgumentRule( new []{"alias", "a"} )
+      });
+      Assert.AreEqual( 12, parser.Get<int>("a"));
+      Assert.AreEqual(12, parser.Get<int>("alias"));
+    }
+
+    [Test]
+    public void GetGivenOptionalValueWithAlias()
+    {
+      // the arguments
+      var args = new[] { "--a", "12" };
+
+      // 'b' is missing.
+      // the second argument is present
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( new []{"alias", "a"} )
+      });
+      Assert.AreEqual(12, parser.Get<int>("a", 42));
+      Assert.AreEqual(12, parser.Get<int>("alias", 42 ));
+    }
+
+    [Test]
+    public void GetNotGivenOptionalValueWithAlias()
+    {
+      // the arguments
+      var args = new string[] { };
+
+      // 'b' is missing.
+      // the second argument is present
+      var parser = new CommandlineParser(args, new CommandlineArgumentRules
+      {
+        new OptionalCommandlineArgumentRule( new []{"alias", "a"} )
+      });
+      Assert.AreEqual(42, parser.Get<int>("a", 42));
+      Assert.AreEqual(42, parser.Get<int>("alias", 42));
+    }
+
+    [Test]
     public void TestMissingRequiredArgument()
     {
       // the arguments

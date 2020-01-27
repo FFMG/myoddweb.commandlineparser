@@ -2,6 +2,35 @@
 
 Notable changes
 
+## 0.1.5 - 27-01-2020
+
+### Added
+
+### Changed
+
+- The command line leading pattern cannot be null.
+
+### Fixed
+
+- Given values with aliases were not being parsed properly.
+- `RequiredCommandlineArgumentRule` with a single key did not accept a description.
+
+  ```csharp
+    ...
+    var helpRule = new RequiredCommandlineArgumentRule( "h", "This is the required command" );
+    ...
+  ```
+
+- `HelpCommandlineArgumentRule` with a single key did not accept a description.
+
+  ```csharp
+    ...
+    var helpRule = new HelpCommandlineArgumentRule( "h", "This is the help command" );
+    ...
+  ```
+
+### Removed
+
 ## 0.1.4 - 20-01-2020
 
 ### Added

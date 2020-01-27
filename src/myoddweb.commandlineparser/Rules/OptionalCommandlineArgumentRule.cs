@@ -24,32 +24,24 @@ namespace myoddweb.commandlineparser.Rules
 {
   public class OptionalCommandlineArgumentRule : CommandlineArgumentRule
   {
-    public OptionalCommandlineArgumentRule(string key, string description = null) :
-      this( new []{key}, description )
+    public OptionalCommandlineArgumentRule(string key) :
+      this(new[] { key })
     {
     }
 
     public OptionalCommandlineArgumentRule(string key, string defaultValue, string description = null) :
-      this( new []{key}, description, defaultValue)
+      this( new []{key}, defaultValue, description )
     {
-      if (null == defaultValue)
-      {
-        throw new ArgumentNullException(nameof(defaultValue), "You cannot pass a null argument as a default value.");
-      }
     }
 
-    public OptionalCommandlineArgumentRule(IEnumerable<string> keys, string description = null) :
-      base( keys, false, description, null)
+    public OptionalCommandlineArgumentRule(IEnumerable<string> keys ) :
+      base(keys, false, null, null)
     {
     }
 
     public OptionalCommandlineArgumentRule(IEnumerable<string> keys, string defaultValue, string description = null) :
       base( keys, false, description, defaultValue)
     {
-      if (null == defaultValue)
-      {
-        throw new ArgumentNullException(nameof(defaultValue), "You cannot pass a null argument as a default value.");
-      }
     }
   }
 }
