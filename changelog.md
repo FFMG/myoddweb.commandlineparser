@@ -2,7 +2,7 @@
 
 Notable changes
 
-## 0.1.5 - xx-yy-zzzz
+## 0.1.5 - 27-01-2020
 
 ### Added
 
