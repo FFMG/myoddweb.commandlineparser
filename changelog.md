@@ -2,6 +2,16 @@
 
 Notable changes
 
+## 0.1.6 - dd-mm-2020
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
 ## 0.1.5 - 27-01-2020
 
 ### Added
