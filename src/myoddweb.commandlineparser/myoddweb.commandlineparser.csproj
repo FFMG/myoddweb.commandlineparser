@@ -11,6 +11,8 @@
     <RootNamespace>myoddweb.commandlineparser</RootNamespace>
     <PackageReleaseNotes></PackageReleaseNotes>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\myoddweb.commandlineparser.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

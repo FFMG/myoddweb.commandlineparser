@@ -102,3 +102,17 @@ Simply pass it as a third argument ...
   var arguments = new CommandlineParser(args, null, "-" );
   ...
 ```
+
+## Strong Name
+
+### Public key
+
+00240000048000009400000006020000002400005253413100040000010001000140936ffbd158
+39e58c0163725bf693f5cc01fe4cab7e06ecace3340ff8e98cd4fcbb735a9d75ce1d2a1d3764cc
+bd5f6099d4c149cc369ccd2bdefd044955ab67585d7aecc64c3d0bd001b250911ce8b5361cba15
+e3c16d99981a1d1a2ba33355954c9af6adb2923dcc56954bc8b1ec3fa8c6ba36a5ed20ff1d1167
+882ce6b5
+
+### Public key token
+
+7ce229023134231c
