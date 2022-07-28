@@ -35,6 +35,7 @@ Lets say that we have a application that has command line options to `install` a
 
 ```csharp
   using myoddweb.commandlineparser;
+  using myoddweb.commandlineparser.Rules;
 
   private void Bar()
   {
